@@ -834,8 +834,10 @@ function refresh() {
       options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'€' } } } }
     });
   } else {
-    document.getElementById('chartDailyMonth').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des premières données journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
-    document.getElementById('chartCumNet').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des premières données journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
+    const elDM = document.getElementById('chartDailyMonth');
+    if (elDM) elDM.parentElement.innerHTML = '<div class="empty-chart">📊 En attente des premières données journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
+    const elCN = document.getElementById('chartCumNet');
+    if (elCN) elCN.parentElement.innerHTML = '<div class="empty-chart">📊 En attente des premières données journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
   }
 
   // ---- BSR Dashboard Table ----
