@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KDP Control Center â Vincent Chevalier</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0a0b0f; --card: #12141c; --card2: #181b25; --border: #1f2233;
+  --text: #e8e8ec; --muted: #6b6f80; --dim: #3d4052;
+  --accent: #6366f1; --green: #10b981; --red: #ef4444; --orange: #f59e0b;
+  --blue: #3b82f6; --purple: #a855f7; --pink: #ec4899; --cyan: #06b6d4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HEADER */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100}
+.topbar h1{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px}
+.topbar h1 span{color:var(--accent)}
+.topbar-right{display:flex;gap:12px;align-items:center}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* TABS */
+.tabs{display:flex;gap:0;padding:0 28px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:10px 18px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+.container{padding:20px 28px;max-width:1500px;margin:0 auto}
+
+/* MEGA KPI */
+.mega-kpi{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.mega-box{flex:1;min-width:180px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+.mega-box.highlight{border-color:var(--accent);background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(99,102,241,.02))}
+.mega-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.mega-value{font-size:32px;font-weight:800;line-height:1.1}
+.mega-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.mega-trend{font-size:12px;margin-top:4px;font-weight:600}
+.up{color:var(--green)} .down{color:var(--red)} .warn{color:var(--orange)}
+
+/* YTD SECTION */
+.ytd-section{margin-bottom:24px;padding:20px;background:linear-gradient(135deg,rgba(99,102,241,.06),rgba(168,85,247,.04));border:1px solid rgba(99,102,241,.2);border-radius:14px}
+.ytd-header{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ytd-header span{color:var(--accent)}
+.ytd-kpis{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.ytd-box{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center}
+.ytd-box-value{font-size:38px;font-weight:900;line-height:1.1;margin-bottom:4px}
+.ytd-box-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.ytd-box-sub{font-size:11px;color:var(--dim);margin-top:6px}
+.ytd-chart-wrap{display:flex;gap:16px}
+.ytd-chart-box{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.ytd-chart-title{font-size:12px;font-weight:600;margin-bottom:8px;color:var(--muted)}
+@media(max-width:900px){.ytd-chart-wrap{flex-direction:column}}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:16px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.tag{font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(99,102,241,.12);color:var(--accent);font-weight:600}
+.tag-green{background:rgba(16,185,129,.12);color:var(--green)}
+.tag-red{background:rgba(239,68,68,.12);color:var(--red)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px}
+@media(max-width:1100px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+.chart-wrap{position:relative;height:240px}
+.empty-chart{display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:13px;text-align:center;padding:20px}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;color:var(--muted);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+td{padding:8px 10px;border-bottom:1px solid rgba(31,34,51,.5)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(99,102,241,.03)}
+.hot{color:var(--green);font-weight:700} .warm{color:var(--orange);font-weight:600} .cold{color:var(--red)}
+
+/* FORMS */
+.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:flex-end}
+.form-group{display:flex;flex-direction:column;gap:3px}
+.form-group label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.form-group input,.form-group select,.form-group textarea{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:6px;font-size:12px;width:130px}
+.form-group input:focus{border-color:var(--accent);outline:none}
+.btn{padding:7px 14px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;transition:.15s}
+.btn-primary{background:var(--accent);color:white}
+.btn-primary:hover{opacity:.85}
+.btn-danger{background:var(--red);color:white}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent)}
+.btn-sm{padding:4px 10px;font-size:11px}
+
+/* ALERTS */
+.alert{padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.alert-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:var(--orange)}
+.alert-ok{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:var(--green)}
+.alert-bad{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red)}
+
+.hidden{display:none!important}
+
+/* PROGRESS */
+.pbar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:6px}
+.pfill{height:100%;border-radius:3px;transition:width .4s}
+
+/* BSR SPARKLINE */
+.bsr-history{display:flex;gap:2px;align-items:flex-end;height:24px}
+.bsr-bar{width:4px;border-radius:1px;background:var(--accent);min-height:2px}
+
+/* REVIEW CARD */
+
+/* SCROLL */
+.scroll-y{max-height:400px;overflow-y:auto}
+.scroll-y::-webkit-scrollbar{width:4px}
+.scroll-y::-webkit-scrollbar-thumb{background:var(--dim);border-radius:2px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>â¡ <span>KDP</span> Control Center</h1>
+  <div class="topbar-right">
+    <span style="font-size:12px;color:var(--muted)" id="lastUpdate">â</span>
+    <div class="live-dot"></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="dashboard">ð Dashboard</div>
+  <div class="tab" data-tab="books">ð Livres & BSR</div>
+  <div class="tab" data-tab="ads">ð¢ Amazon Ads</div>
+  <div class="tab" data-tab="history">ð Historique</div>
+</div>
+
+<!-- ================ DASHBOARD ================ -->
+<div class="container tab-content" id="tab-dashboard">
+
+  <!-- BILLING ALERT -->
+  <div class="alert alert-bad" id="billingAlert" style="margin-bottom:16px">
+    â ï¸ <b>ALERTE FACTURATION</b> â Amazon Ads : campagnes suspendues dans 3 pays en raison d'un problÃ¨me de facturation. VÃ©rifier immÃ©diatement dans le Campaign Manager.
+  </div>
+
+  <!-- ===== YTD CUMULATIVE SECTION ===== -->
+  <div class="ytd-section">
+    <div class="ytd-header">ð <span>Cumul 2026</span> â Year-to-Date</div>
+    <div class="ytd-kpis">
+      <div class="ytd-box">
+        <div class="ytd-box-value up" id="ytdRoyalties">â</div>
+        <div class="ytd-box-label">Redevances totales</div>
+        <div class="ytd-box-sub" id="ytdRoyaltiesSub">depuis jan 2026</div>
+      </div>
+      <div class="ytd-box">
+        <div class="ytd-box-value" style="color:var(--red)" id="ytdAdsTTC">â</div>
+        <div class="ytd-box-label">Budget pub TTC total</div>
+        <div class="ytd-box-sub" id="ytdAdsSub">dont TVA 20%</div>
+      </div>
+      <div class="ytd-box" style="border-color:var(--accent)">
+        <div class="ytd-box-value" id="ytdNet">â</div>
+        <div class="ytd-box-label">Marge nette cumulÃ©e</div>
+        <div class="ytd-box-sub" id="ytdNetSub">objectif 48kâ¬</div>
+      </div>
+      <div class="ytd-box">
+        <div class="ytd-box-value" style="color:var(--cyan)" id="ytdUnits">â</div>
+        <div class="ytd-box-label">UnitÃ©s vendues</div>
+        <div class="ytd-box-sub" id="ytdUnitsSub">total 2026</div>
+      </div>
+      <div class="ytd-box">
+        <div class="ytd-box-value" id="ytdACOS">â</div>
+        <div class="ytd-box-label">ACOS YTD</div>
+        <div class="ytd-box-sub" id="ytdACOSSub">cible &lt;35%</div>
+      </div>
+    </div>
+    <div class="ytd-chart-wrap">
+      <div class="ytd-chart-box" style="flex:2">
+        <div class="ytd-chart-title">Ãvolution mensuelle â Redevances vs Ads TTC vs Marge nette</div>
+        <div style="height:200px"><canvas id="chartYTDMonthly"></canvas></div>
+      </div>
+      <div class="ytd-chart-box" style="flex:1">
+        <div class="ytd-chart-title">Progression objectif 48kâ¬ net</div>
+        <div style="height:200px"><canvas id="chartYTDGoal"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CURRENT MONTH KPIS ===== -->
+  <div class="mega-kpi">
+    <div class="mega-box highlight">
+      <div class="mega-label">ð° Marge nette mois en cours</div>
+      <div class="mega-value" id="dashNet">â</div>
+      <div class="mega-sub" id="dashNetSub">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">ð¦ Ventes mois en cours</div>
+      <div class="mega-value" id="dashUnits">â</div>
+      <div class="mega-sub" id="dashUnitsSub">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">ðµ Redevances mois en cours</div>
+      <div class="mega-value" id="dashCA">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">ð¢ DÃ©penses Ads TTC mois</div>
+      <div class="mega-value" id="dashAds">â</div>
+      <div class="mega-sub" id="dashAdsSub">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">ð ACOS mois</div>
+      <div class="mega-value" id="dashACOS">â</div>
+      <div class="mega-sub">Cible &lt;35%</div>
+    </div>
+  </div>
+
+  <div id="dashAlerts"></div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Ventes & Marge journaliÃ¨res <span class="tag">mois en cours</span></div>
+      <div class="chart-wrap"><canvas id="chartDailyMonth"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Cumul marge nette <span class="tag">mois en cours</span></div>
+      <div class="chart-wrap"><canvas id="chartCumNet"></canvas></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Top BSR aujourd'hui <span class="tag" id="tagBSRDate">â</span></div>
+      <table>
+        <thead><tr><th>Livre</th><th>BSR</th><th>Tendance</th></tr></thead>
+        <tbody id="dashBSRTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Objectif 2026 â 48 000â¬ net (4kâ¬/mois lissÃ©)</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="pbar" style="flex:1;height:12px"><div class="pfill" id="goalBar" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+      <span style="font-size:14px;font-weight:700" id="goalPct">0%</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--muted)">
+      <span id="goalCum">0â¬ cumulÃ©</span>
+      <span>Objectif : 48 000â¬</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================ LIVRES & BSR ================ -->
+<div class="container tab-content hidden" id="tab-books">
+
+  <div class="card">
+    <div class="card-title">Classement BSR actuel <span class="tag">Auto-scrapÃ©</span></div>
+    <div class="scroll-y">
+      <table>
+        <thead><tr><th>Livre</th><th>BSR actuel</th><th>Tendance 7j</th><th>DerniÃ¨re MÃ J</th></tr></thead>
+        <tbody id="bsrTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ãvolution BSR â Top 5 <span class="tag">30 derniers jours</span></div>
+    <div class="chart-wrap" style="height:300px"><canvas id="chartBSR"></canvas></div>
+  </div>
+</div>
+
+<!-- ================ AMAZON ADS ================ -->
+<div class="container tab-content hidden" id="tab-ads">
+
+  <div class="mega-kpi">
+    <div class="mega-box">
+      <div class="mega-label">Budget Ads HT mois</div>
+      <div class="mega-value" id="adsMonthHT">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">TVA 20% mois</div>
+      <div class="mega-value" id="adsMonthTVA">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">Budget TTC total mois</div>
+      <div class="mega-value" id="adsMonthTTC">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">ACOS mois</div>
+      <div class="mega-value" id="adsMonthACOS">â</div>
+    </div>
+    <div class="mega-box">
+      <div class="mega-label">Ventes Ads mois</div>
+      <div class="mega-value" id="adsMonthSales">â</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">DÃ©penses Ads vs Ventes Ads <span class="tag">quotidien</span></div>
+      <div class="chart-wrap"><canvas id="chartAdsDaily"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">ACOS quotidien <span class="tag">cible &lt;35%</span></div>
+      <div class="chart-wrap"><canvas id="chartACOSDaily"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Historique Ads â Mensuel (donnÃ©es scrapÃ©es)</div>
+    <table>
+      <thead><tr><th>Mois</th><th>Ads HT</th><th>TVA 20%</th><th>Ads TTC</th><th>Ventes Ads</th><th>ACOS</th><th>Redevances</th><th>Marge nette</th></tr></thead>
+      <tbody id="adsHistTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ================ AVIS ================ -->
+
+<!-- ================ HISTORIQUE ================ -->
+<div class="container tab-content hidden" id="tab-history">
+
+  <div class="card">
+    <div class="card-title">ð Historique mensuel</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>PÃ©riode</label>
+        <select id="histPeriod" onchange="renderHistory()">
+          <option value="all">Tout</option>
+          <option value="3">3 derniers mois</option>
+          <option value="6">6 derniers mois</option>
+        </select>
+      </div>
+    </div>
+    <div class="scroll-y">
+      <table>
+        <thead><tr><th>Mois</th><th>Source</th><th>UnitÃ©s</th><th>Redevances</th><th>Ads HT</th><th>TVA</th><th>Ads TTC</th><th>ACOS</th><th>Marge nette</th></tr></thead>
+        <tbody id="histTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Marge nette mensuelle</div>
+    <div class="chart-wrap" style="height:300px"><canvas id="chartHistNet"></canvas></div>
+  </div>
+
+</div>
+
+<script>
+// ===== BOOKS CONFIG =====
+const BOOKS = [
+  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:93,defaultReviews:143,defaultRating:4.3},
+  {id:'roblox-t2',title:'Roblox T2',asin:'B0GMD3BN6N',identity:'Simon',defaultBSR:864,defaultReviews:29,defaultRating:4.6},
+  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:633,defaultReviews:145,defaultRating:4.7},
+  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:1151,defaultReviews:262,defaultRating:4.6},
+  {id:'gaspard-t2',title:'Gaspard T2',asin:'B0F9P8DGYV',identity:'M&V',defaultBSR:3614,defaultReviews:190,defaultRating:4.7},
+  {id:'gaspard-t3',title:'Gaspard T3',asin:'B0F9DX17MV',identity:'M&V',defaultBSR:37925,defaultReviews:115,defaultRating:4.6},
+  {id:'gaspard-t4',title:'Gaspard T4',asin:'B0F8VGYNL3',identity:'M&V',defaultBSR:91188,defaultReviews:72,defaultRating:4.6},
+  {id:'gaspard-t5',title:'Gaspard T5',asin:'B0FT7ZVY8M',identity:'M&V',defaultBSR:8142,defaultReviews:28,defaultRating:4.5},
+  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:5573,defaultReviews:33,defaultRating:4.6},
+  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:3683,defaultReviews:35,defaultRating:4.1},
+  {id:'petite-girafe',title:'Petite Girafe',asin:'B0D36H833M',identity:'M&V',defaultBSR:37267,defaultReviews:156,defaultRating:4.7},
+  {id:'frisson',title:'Frisson Manchot',asin:'B0F91FT2ZT',identity:'M&V',defaultBSR:37516,defaultReviews:39,defaultRating:4.6},
+  {id:'histoire-lit',title:'Histoire au Lit',asin:'B0F5PWMFSJ',identity:'M&V',defaultBSR:70138,defaultReviews:69,defaultRating:4.5},
+  {id:'livre-anime',title:'Mon Livre AnimÃ©',asin:'B0FTTVMC4F',identity:'M&V',defaultBSR:522530,defaultReviews:23,defaultRating:5.0},
+  {id:'enquete-savane',title:'EnquÃªte Savane',asin:'B0DP2H38V6',identity:'M&V',defaultBSR:278998,defaultReviews:51,defaultRating:5.0},
+  {id:'brawl-stars',title:'Brawl Stars',asin:'B0FXJ4TW6G',identity:'Simon',defaultBSR:361246,defaultReviews:17,defaultRating:4.4},
+];
+
+// ===== PRE-LOADED MONTHLY DATA (scraped from KDP & Amazon Ads) =====
+// These are real data points scraped from KDP Reports and Amazon Ads Campaign Manager
+const MONTHLY_SCRAPED = [
+  {
+    month: '2026-01',
+    label: 'Janvier 2026',
+    source: 'KDP Reports 08/03',
+    units: 1664,
+    royalties: 4679.25,  // = YTD 11194.93 - FÃ©v(5365) - Mars(1150.68)
+    adsHT: 3038,         // from goals-2026.md (CoÃ»ts 3646 TTC / 1.2)
+    adsSales: 5149,      // = adsHT/ACOS = 3038/0.59
+    acos: 59.0,
+    net: null             // calculated below
+  },
+  {
+    month: '2026-02',
+    label: 'FÃ©vrier 2026',
+    source: 'ScrapÃ© 07/03',
+    units: 1045,         // KDP Reports 08/03
+    royalties: 5365,     // FR 5218.58 brochÃ©s + 8.51 ebooks + DE 9.13 + ES 11.91 + BE 69.75 + ~47 non-EUR
+    adsHT: 2751.30,      // confirmed total all campaigns (no filters)
+    adsSales: 8431.79,   // confirmed matching top bar
+    acos: 32.63,
+    net: null            // calculated below
+  },
+  {
+    month: '2026-03',
+    label: 'Mars 2026',
+    source: 'KDP+Ads 08/03 (8j)',
+    units: 220,
+    royalties: 1150.68,
+    adsHT: 694.91,       // Ads 1-7 mars = 694.91â¬ (capture Vincent 08/03)
+    adsSales: 1698.17,   // = 694.91 / 0.4092
+    acos: 40.92,         // capture Vincent 08/03
+    net: null            // calculated below
+  }
+];
+
+// Calculate net for months where it's not directly available
+MONTHLY_SCRAPED.forEach(m => {
+  if (m.net === null) {
+    m.net = m.royalties - (m.adsHT * 1.2); // royalties - ads TTC
+  }
+});
+
+// ===== DATA STORE =====
+function loadData(key, def) { try { return JSON.parse(localStorage.getItem('kdp_'+key)) || def; } catch { return def; } }
+function saveData(key, val) { localStorage.setItem('kdp_'+key, JSON.stringify(val)); }
+
+let entries = loadData('entries', []);      // [{date, units, royalties, adsHT, adsSales}]
+let bsrData = loadData('bsr', []);          // [{date, bookId, bsr}]
+
+// ===== INIT =====
+const today = new Date().toISOString().slice(0,10);
+
+// ===== TABS =====
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(x => x.classList.add('hidden'));
+    t.classList.add('active');
+    document.getElementById('tab-' + t.dataset.tab).classList.remove('hidden');
+    refresh();
+  });
+});
+
+// ===== CHART DEFAULTS =====
+Chart.defaults.color = '#6b6f80';
+Chart.defaults.borderColor = '#1f2233';
+Chart.defaults.font.size = 11;
+
+
+// ===== HELPERS =====
+function getCurrentMonthKey() { return today.slice(0,7); }
+function getMonthEntries(monthKey) { return entries.filter(e => e.date.startsWith(monthKey)); }
+
+// Get monthly data: merge scraped summaries with daily entries
+function getMonthlyData(monthKey) {
+  const scraped = MONTHLY_SCRAPED.find(m => m.month === monthKey);
+  const dailyEntries = getMonthEntries(monthKey);
+
+  // If we have daily entries for this month, use their sum
+  if (dailyEntries.length > 0) {
+    const r = dailyEntries.reduce((s,e) => s + e.royalties, 0);
+    const ah = dailyEntries.reduce((s,e) => s + e.adsHT, 0);
+    const as = dailyEntries.reduce((s,e) => s + (e.adsSales||0), 0);
+    const u = dailyEntries.reduce((s,e) => s + e.units, 0);
+    return {
+      royalties: r, adsHT: ah, adsSales: as, units: u,
+      net: r - ah * 1.2,
+      acos: as > 0 ? (ah/as*100) : 0,
+      source: 'Saisie (' + dailyEntries.length + 'j)',
+      daysEntered: dailyEntries.length
+    };
+  }
+
+  // Otherwise use scraped data
+  if (scraped) {
+    return {
+      royalties: scraped.royalties, adsHT: scraped.adsHT, adsSales: scraped.adsSales,
+      units: scraped.units, net: scraped.net, acos: scraped.acos,
+      source: scraped.source, daysEntered: 0
+    };
+  }
+
+  return null;
+}
+
+// ===== FORMAT HELPERS =====
+function fmt(n) { return n == null ? 'â' : n.toLocaleString('fr-FR', {maximumFractionDigits:0}); }
+function fmtK(n) { return n >= 1000 ? (n/1000).toFixed(1).replace('.0','') + 'k' : fmt(n); }
+
+// ===== TARGETS =====
+const ANNUAL_GOAL = 48000;
+const MONTHLY_TARGETS = {
+  '01': 3032, '02': 3032, '03': 3032, '04': 3032,
+  '05': 3032, '06': 3032, '07': 3032, '08': 1516, '09': 3032,
+  '10': 3032, '11': 7200, '12': 12000
+};
+
+// ===== REFRESH ALL =====
+let charts = {};
+function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+
+function refresh() {
+  const mk = getCurrentMonthKey();
+  const me = getMonthEntries(mk);
+
+  // ---- YTD CUMULATIVE ----
+  let ytdRoy = 0, ytdAdsHT = 0, ytdAdsSales = 0, ytdNet = 0, ytdUnits = 0;
+  const ytdMonths = [];
+
+  MONTHLY_SCRAPED.forEach(ms => {
+    const md = getMonthlyData(ms.month);
+    if (md) {
+      ytdRoy += md.royalties;
+      ytdAdsHT += md.adsHT;
+      ytdAdsSales += md.adsSales;
+      ytdNet += md.net;
+      if (md.units != null) ytdUnits += md.units;
+      ytdMonths.push({ ...md, month: ms.month, label: ms.label });
+    }
+  });
+
+  // Also add months from daily entries that aren't in MONTHLY_SCRAPED
+  const entryMonths = [...new Set(entries.map(e => e.date.slice(0,7)))];
+  entryMonths.forEach(mk2 => {
+    if (!MONTHLY_SCRAPED.find(m => m.month === mk2)) {
+      const md = getMonthlyData(mk2);
+      if (md) {
+        ytdRoy += md.royalties;
+        ytdAdsHT += md.adsHT;
+        ytdAdsSales += md.adsSales;
+        ytdNet += md.net;
+        if (md.units != null) ytdUnits += md.units;
+        ytdMonths.push({ ...md, month: mk2, label: mk2 });
+      }
+    }
+  });
+
+  // Sort ytdMonths
+  ytdMonths.sort((a,b) => a.month.localeCompare(b.month));
+
+  const ytdAdsTTC = ytdAdsHT * 1.2;
+
+  document.getElementById('ytdRoyalties').textContent = fmt(ytdRoy) + 'â¬';
+  document.getElementById('ytdRoyaltiesSub').textContent = ytdMonths.length + ' mois Â· depuis jan 2026';
+  document.getElementById('ytdAdsTTC').textContent = fmt(ytdAdsTTC) + 'â¬';
+  document.getElementById('ytdAdsSub').textContent = 'HT ' + fmt(ytdAdsHT) + 'â¬ + TVA ' + fmt(ytdAdsHT*0.2) + 'â¬';
+  document.getElementById('ytdNet').textContent = fmt(ytdNet) + 'â¬';
+  document.getElementById('ytdNet').style.color = ytdNet >= 0 ? 'var(--green)' : 'var(--red)';
+  const ytdPct = (ytdNet / ANNUAL_GOAL * 100).toFixed(1);
+  // Calcul target cumulÃ© Ã  ce stade de l'annÃ©e
+  const currentMonth = parseInt(new Date().toISOString().slice(5,7));
+  let ytdTarget = 0;
+  for (let i = 1; i <= currentMonth; i++) {
+    ytdTarget += MONTHLY_TARGETS[String(i).padStart(2,'0')] || 0;
+  }
+  const vsTarget = ytdNet - ytdTarget;
+  const vsLabel = vsTarget >= 0 ? '+' + fmt(vsTarget) + 'â¬ vs target' : fmt(vsTarget) + 'â¬ vs target';
+  document.getElementById('ytdNetSub').textContent = ytdPct + '% Â· ' + vsLabel;
+  document.getElementById('ytdUnits').textContent = fmt(ytdUnits);
+  document.getElementById('ytdUnitsSub').textContent = 'total 2026';
+
+  // ACOS YTD
+  const ytdACOS = ytdAdsSales > 0 ? (ytdAdsHT / ytdAdsSales * 100).toFixed(1) : 'â';
+  document.getElementById('ytdACOS').textContent = ytdACOS !== 'â' ? ytdACOS + '%' : 'â';
+  document.getElementById('ytdACOS').style.color = ytdACOS !== 'â' && parseFloat(ytdACOS) > 35 ? 'var(--orange)' : 'var(--green)';
+  document.getElementById('ytdACOSSub').textContent = ytdACOS !== 'â' ? 'Ads HT ' + fmt(ytdAdsHT) + 'â¬ / Ventes ' + fmt(ytdAdsSales) + 'â¬' : 'cible <35%';
+
+  // YTD Monthly Chart
+  if (ytdMonths.length > 0) {
+    const mLabels = ytdMonths.map(m => {
+      const [y,mo] = m.month.split('-');
+      return ['Jan','FÃ©v','Mar','Avr','Mai','Jun','Jul','AoÃ»','Sep','Oct','Nov','DÃ©c'][parseInt(mo)-1];
+    });
+
+    destroyChart('ytdMonthly');
+    charts.ytdMonthly = new Chart(document.getElementById('chartYTDMonthly'), {
+      type: 'bar',
+      data: {
+        labels: mLabels,
+        datasets: [
+          { label: 'Redevances', data: ytdMonths.map(m=>m.royalties), backgroundColor: 'rgba(99,102,241,.5)', borderRadius: 4, order: 2 },
+          { label: 'Ads TTC', data: ytdMonths.map(m=>m.adsHT*1.2), backgroundColor: 'rgba(239,68,68,.4)', borderRadius: 4, order: 3 },
+          { label: 'Marge nette', data: ytdMonths.map(m=>m.net), type: 'line', borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.1)', fill: true, tension: .3, pointRadius: 5, pointBackgroundColor: ytdMonths.map(m => m.net >= 0 ? '#10b981' : '#ef4444'), order: 1 },
+          { label: 'Target saisonnier', data: ytdMonths.map(m => MONTHLY_TARGETS[m.month.slice(5,7)] || 0), type: 'line', borderColor: '#f59e0b', borderDash: [6,4], borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#f59e0b', fill: false, tension: .3, order: 0 },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: { y: { ticks: { callback: v => fmtK(v) + 'â¬' } } },
+        plugins: { legend: { labels: { boxWidth: 12 } } }
+      }
+    });
+
+    // YTD Goal donut
+    destroyChart('ytdGoal');
+    const achieved = Math.max(0, ytdNet);
+    const remaining = Math.max(0, ANNUAL_GOAL - achieved);
+    charts.ytdGoal = new Chart(document.getElementById('chartYTDGoal'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Acquis', 'Restant'],
+        datasets: [{
+          data: [achieved, remaining],
+          backgroundColor: ['rgba(99,102,241,.7)', 'rgba(31,34,51,.5)'],
+          borderWidth: 0,
+          cutout: '70%'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ctx.label + ' : ' + fmt(ctx.raw) + 'â¬' } }
+        }
+      },
+      plugins: [{
+        id: 'centerText',
+        afterDraw(chart) {
+          const {ctx, chartArea:{width,height,top,left}} = chart;
+          ctx.save();
+          ctx.fillStyle = '#e8e8ec';
+          ctx.font = 'bold 24px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(ytdPct + '%', left + width/2, top + height/2 - 8);
+          ctx.font = '11px Inter, sans-serif';
+          ctx.fillStyle = '#6b6f80';
+          ctx.fillText(fmt(achieved) + 'â¬ / 48kâ¬', left + width/2, top + height/2 + 14);
+          ctx.restore();
+        }
+      }]
+    });
+  }
+
+  // ---- Dashboard Current Month KPIs ----
+  // Use scraped data for current month if no daily entries
+  const currentMonthData = getMonthlyData(mk);
+  let totalUnits, totalRoy, totalAdsHT, totalTVA, totalTTC, totalAdsSales, acos, netMonth;
+
+  if (me.length > 0) {
+    totalUnits = me.reduce((s,e) => s + e.units, 0);
+    totalRoy = me.reduce((s,e) => s + e.royalties, 0);
+    totalAdsHT = me.reduce((s,e) => s + e.adsHT, 0);
+    totalTVA = totalAdsHT * 0.2;
+    totalTTC = totalAdsHT + totalTVA;
+    totalAdsSales = me.reduce((s,e) => s + e.adsSales, 0);
+    acos = totalAdsSales > 0 ? ((totalAdsHT / totalAdsSales) * 100).toFixed(1) : 'â';
+    netMonth = totalRoy - totalTTC;
+  } else if (currentMonthData) {
+    totalUnits = currentMonthData.units;
+    totalRoy = currentMonthData.royalties;
+    totalAdsHT = currentMonthData.adsHT;
+    totalTVA = totalAdsHT * 0.2;
+    totalTTC = totalAdsHT + totalTVA;
+    totalAdsSales = currentMonthData.adsSales;
+    acos = currentMonthData.acos.toFixed(1);
+    netMonth = currentMonthData.net;
+  } else {
+    totalUnits = 0; totalRoy = 0; totalAdsHT = 0; totalTVA = 0; totalTTC = 0; totalAdsSales = 0; acos = 'â'; netMonth = 0;
+  }
+
+  document.getElementById('dashNet').textContent = fmt(netMonth) + 'â¬';
+  document.getElementById('dashNet').style.color = netMonth >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('dashNetSub').textContent = 'Redevances ' + fmt(totalRoy) + 'â¬ â Ads TTC ' + fmt(totalTTC) + 'â¬';
+  document.getElementById('dashUnits').textContent = fmt(totalUnits);
+  document.getElementById('dashUnitsSub').textContent = 'donnÃ©es auto-scrapÃ©es / ~' + new Date(today).getDate() + ' jours Ã©coulÃ©s';
+  document.getElementById('dashCA').textContent = fmt(totalRoy) + 'â¬';
+  document.getElementById('dashAds').textContent = fmt(totalTTC) + 'â¬';
+  document.getElementById('dashAdsSub').textContent = 'HT ' + fmt(totalAdsHT) + 'â¬ + TVA ' + fmt(totalTVA) + 'â¬';
+  document.getElementById('dashACOS').textContent = acos !== 'â' ? acos + '%' : 'â';
+  document.getElementById('dashACOS').style.color = acos !== 'â' && parseFloat(acos) > 35 ? 'var(--orange)' : 'var(--green)';
+
+  // Alerts
+  const alertsDiv = document.getElementById('dashAlerts');
+  alertsDiv.innerHTML = '';
+  if (me.length === 0 && !currentMonthData) alertsDiv.innerHTML += '<div class="alert alert-warn">ð Aucune donnÃ©e ce mois. Les donnÃ©es seront scrapÃ©es automatiquement 4Ã/jour.</div>';
+  if (acos !== 'â' && parseFloat(acos) > 50) alertsDiv.innerHTML += '<div class="alert alert-bad">ð´ ACOS Ã  ' + acos + '% â Marge fortement grevÃ©e par les pubs.</div>';
+  else if (acos !== 'â' && parseFloat(acos) > 35) alertsDiv.innerHTML += '<div class="alert alert-warn">â ï¸ ACOS Ã  ' + acos + '% â Au-dessus de la cible 35%.</div>';
+  if (netMonth < 0) alertsDiv.innerHTML += '<div class="alert alert-bad">â Marge nÃ©gative ce mois : ' + fmt(netMonth) + 'â¬</div>';
+
+  // Goal progress (using YTD data)
+  const goalPct = Math.min(100, (ytdNet / ANNUAL_GOAL * 100)).toFixed(1);
+  document.getElementById('goalBar').style.width = goalPct + '%';
+  document.getElementById('goalPct').textContent = goalPct + '%';
+  document.getElementById('goalCum').textContent = fmt(ytdNet) + 'â¬ cumulÃ©';
+
+  // Last update
+  const scrapedDate = MONTHLY_SCRAPED.length > 0 ? MONTHLY_SCRAPED[MONTHLY_SCRAPED.length-1].source : '';
+  document.getElementById('lastUpdate').textContent = 'DonnÃ©es : ' + scrapedDate + ' Â· Auto 4Ã/jour';
+
+  // ---- Daily chart for current month ----
+  if (me.length > 0) {
+    const days = me.map(e => e.date.slice(8));
+    const nets = me.map(e => e.royalties - (e.adsHT * 1.2));
+
+    destroyChart('dailyMonth');
+    charts.dailyMonth = new Chart(document.getElementById('chartDailyMonth'), {
+      type: 'bar',
+      data: {
+        labels: days,
+        datasets: [
+          { label: 'Royalties', data: me.map(e=>e.royalties), backgroundColor: 'rgba(99,102,241,.4)', borderRadius: 3 },
+          { label: 'Marge nette', data: nets, backgroundColor: nets.map(v => v>=0 ? 'rgba(16,185,129,.5)' : 'rgba(239,68,68,.5)'), borderRadius: 3 },
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'â¬' } } } }
+    });
+
+    let cum = 0;
+    const cumData = me.map(e => { cum += e.royalties - (e.adsHT * 1.2); return cum; });
+    destroyChart('cumNet');
+    charts.cumNet = new Chart(document.getElementById('chartCumNet'), {
+      type: 'line',
+      data: {
+        labels: days,
+        datasets: [
+          { label: 'Cumul net', data: cumData, borderColor: cumData[cumData.length-1] >= 0 ? '#10b981' : '#ef4444', fill: true, backgroundColor: cumData[cumData.length-1] >= 0 ? 'rgba(16,185,129,.1)' : 'rgba(239,68,68,.1)', tension: .3, pointRadius: 3 },
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'â¬' } } } }
+    });
+  } else {
+    document.getElementById('chartDailyMonth').parentElement.innerHTML = '<div class="empty-chart">ð En attente des premiÃ¨res donnÃ©es journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+    document.getElementById('chartCumNet').parentElement.innerHTML = '<div class="empty-chart">ð En attente des premiÃ¨res donnÃ©es journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+  }
+
+  // ---- BSR Dashboard Table ----
+  const bsrTableEl = document.getElementById('dashBSRTable');
+  bsrTableEl.innerHTML = '';
+  const latestBSR = {};
+  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-02-28' }; });
+  bsrData.forEach(d => { latestBSR[d.bookId] = { bsr: d.bsr, date: d.date }; });
+
+  const bsrSorted = Object.entries(latestBSR).sort((a,b) => a[1].bsr - b[1].bsr).slice(0, 8);
+  bsrSorted.forEach(([id, data]) => {
+    const book = BOOKS.find(b => b.id === id);
+    if (!book) return;
+    const cls = data.bsr < 1000 ? 'hot' : data.bsr < 10000 ? 'warm' : '';
+    const prev = bsrData.filter(d => d.bookId === id).slice(-7);
+    let trend = 'â';
+    if (prev.length >= 2) {
+      const diff = prev[prev.length-1].bsr - prev[0].bsr;
+      trend = diff < 0 ? '<span class="up">â +' + Math.abs(diff) + ' places</span>' : diff > 0 ? '<span class="down">â -' + diff + ' places</span>' : 'â stable';
+    }
+    bsrTableEl.innerHTML += '<tr><td><b>' + book.title + '</b></td><td class="' + cls + '">#' + data.bsr.toLocaleString('fr') + '</td><td>' + trend + '</td></tr>';
+  });
+  document.getElementById('tagBSRDate').textContent = bsrSorted.length > 0 ? bsrSorted[0][1].date : 'â';
+
+  // ---- BSR table (books tab) ----
+  const bsrTBody = document.getElementById('bsrTable');
+  bsrTBody.innerHTML = '';
+  Object.entries(latestBSR).sort((a,b) => a[1].bsr - b[1].bsr).forEach(([id, data]) => {
+    const book = BOOKS.find(b => b.id === id);
+    if (!book) return;
+    const cls = data.bsr < 1000 ? 'hot' : data.bsr < 10000 ? 'warm' : data.bsr > 100000 ? 'cold' : '';
+    const history = bsrData.filter(d => d.bookId === id).slice(-7);
+    let trend7 = 'â';
+    if (history.length >= 2) {
+      const diff = history[history.length-1].bsr - history[0].bsr;
+      trend7 = diff < 0 ? '<span class="up">â ' + Math.abs(diff) + '</span>' : diff > 0 ? '<span class="down">â ' + diff + '</span>' : 'â';
+    }
+    bsrTBody.innerHTML += '<tr><td><b>' + book.title + '</b></td><td class="' + cls + '">#' + data.bsr.toLocaleString('fr') + '</td><td>' + trend7 + '</td><td style="color:var(--muted)">' + data.date + '</td></tr>';
+  });
+
+  // ---- BSR Chart ----
+  const top5Books = Object.entries(latestBSR).sort((a,b) => a[1].bsr - b[1].bsr).slice(0, 5).map(([id]) => id);
+  const allBSRDates = [...new Set(bsrData.map(d=>d.date))].sort().slice(-30);
+  if (allBSRDates.length > 0) {
+    const colors = ['#6366f1','#ec4899','#10b981','#f59e0b','#3b82f6'];
+    const datasets = top5Books.map((id, i) => {
+      const book = BOOKS.find(b=>b.id===id);
+      const points = allBSRDates.map(date => {
+        const entry = bsrData.find(d => d.date === date && d.bookId === id);
+        return entry ? entry.bsr : null;
+      });
+      return { label: book.title, data: points, borderColor: colors[i], tension: .3, pointRadius: 2, spanGaps: true };
+    });
+    destroyChart('bsr');
+    charts.bsr = new Chart(document.getElementById('chartBSR'), {
+      type: 'line',
+      data: { labels: allBSRDates.map(d=>d.slice(5)), datasets },
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { reverse: true, title: { display: true, text: 'BSR (plus bas = mieux)' } } } }
+    });
+  } else {
+    document.getElementById('chartBSR').parentElement.innerHTML = '<div class="empty-chart">ð En attente des donnÃ©es BSR scrapÃ©es<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+  }
+
+  // ---- Ads tab ----
+  document.getElementById('adsMonthHT').textContent = fmt(totalAdsHT) + 'â¬';
+  document.getElementById('adsMonthTVA').textContent = fmt(totalTVA) + 'â¬';
+  document.getElementById('adsMonthTTC').textContent = fmt(totalTTC) + 'â¬';
+  document.getElementById('adsMonthACOS').textContent = acos !== 'â' ? acos + '%' : 'â';
+  document.getElementById('adsMonthACOS').style.color = acos !== 'â' && parseFloat(acos) > 35 ? 'var(--orange)' : 'var(--green)';
+  document.getElementById('adsMonthSales').textContent = fmt(totalAdsSales) + 'â¬';
+
+  if (me.length > 0) {
+    const days = me.map(e=>e.date.slice(8));
+    destroyChart('adsDaily');
+    charts.adsDaily = new Chart(document.getElementById('chartAdsDaily'), {
+      type: 'bar',
+      data: {
+        labels: days,
+        datasets: [
+          { label: 'Ads HT', data: me.map(e=>e.adsHT), backgroundColor: 'rgba(239,68,68,.4)', borderRadius: 3 },
+          { label: 'Ventes Ads', data: me.map(e=>e.adsSales||0), backgroundColor: 'rgba(16,185,129,.4)', borderRadius: 3 },
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'â¬' } } } }
+    });
+
+    const dailyACOS = me.map(e => e.adsSales > 0 ? (e.adsHT / e.adsSales * 100) : 0);
+    destroyChart('acosDaily');
+    charts.acosDaily = new Chart(document.getElementById('chartACOSDaily'), {
+      type: 'line',
+      data: {
+        labels: days,
+        datasets: [
+          { label: 'ACOS', data: dailyACOS, borderColor: '#f59e0b', fill: true, backgroundColor: 'rgba(245,158,11,.1)', tension: .3, pointRadius: 3 },
+          { label: 'Cible 35%', data: Array(days.length).fill(35), borderColor: '#10b981', borderDash: [5,5], pointRadius: 0 },
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { min:0, ticks: { callback: v=>v+'%' } } } }
+    });
+  } else {
+    document.getElementById('chartAdsDaily').parentElement.innerHTML = '<div class="empty-chart">ð En attente des donnÃ©es Ads journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+    document.getElementById('chartACOSDaily').parentElement.innerHTML = '<div class="empty-chart">ð En attente des donnÃ©es Ads journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+  }
+
+  // ---- Ads monthly history (using scraped + entries) ----
+  const adsHistBody = document.getElementById('adsHistTable');
+  adsHistBody.innerHTML = '';
+
+  // Collect all months (from scraped + entries)
+  const allMonthKeys = [...new Set([
+    ...MONTHLY_SCRAPED.map(m => m.month),
+    ...entries.map(e => e.date.slice(0,7))
+  ])].sort();
+
+  allMonthKeys.forEach(mk2 => {
+    const md = getMonthlyData(mk2);
+    if (!md) return;
+    const tv = md.adsHT * 0.2;
+    const tc = md.adsHT + tv;
+    const ac2 = md.adsSales > 0 ? (md.adsHT/md.adsSales*100).toFixed(1)+'%' : 'â';
+    const n2 = md.net;
+    adsHistBody.innerHTML += '<tr><td><b>'+mk2+'</b> <span style="color:var(--dim);font-size:10px">'+md.source+'</span></td><td>'+fmt(md.adsHT)+'â¬</td><td>'+fmt(tv)+'â¬</td><td>'+fmt(tc)+'â¬</td><td>'+fmt(md.adsSales)+'â¬</td><td>'+ac2+'</td><td>'+fmt(md.royalties)+'â¬</td><td class="'+(n2>=0?'up':'down')+'">'+fmt(n2)+'â¬</td></tr>';
+  });
+
+  // ---- History tab ----
+  renderHistory();
+}
+
+
+function renderHistory() {
+  const histBody = document.getElementById('histTable');
+  histBody.innerHTML = '';
+
+  // Merge scraped + daily entry months
+  const allMonthKeys = [...new Set([
+    ...MONTHLY_SCRAPED.map(m => m.month),
+    ...entries.map(e => e.date.slice(0,7))
+  ])].sort();
+
+  const period = document.getElementById('histPeriod').value;
+  let filtered = allMonthKeys.slice().reverse();
+  if (period !== 'all') filtered = filtered.slice(0, parseInt(period));
+  filtered = filtered.reverse();
+
+  const chartLabels = [];
+  const chartNets = [];
+
+  filtered.forEach(mk2 => {
+    const md = getMonthlyData(mk2);
+    if (!md) return;
+    const tv = md.adsHT * 0.2;
+    const tc = md.adsHT + tv;
+    const ac2 = md.adsSales > 0 ? (md.adsHT/md.adsSales*100).toFixed(1)+'%' : 'â';
+
+    histBody.innerHTML += '<tr><td><b>'+mk2+'</b></td><td><span style="font-size:10px;color:var(--dim)">'+md.source+'</span></td><td>'+fmt(md.units)+'</td><td>'+fmt(md.royalties)+'â¬</td><td>'+fmt(md.adsHT)+'â¬</td><td>'+fmt(tv)+'â¬</td><td>'+fmt(tc)+'â¬</td><td>'+ac2+'</td><td class="'+(md.net>=0?'up':'down')+'"><b>'+fmt(md.net)+'â¬</b></td></tr>';
+    chartLabels.push(mk2);
+    chartNets.push(md.net);
+  });
+
+  destroyChart('histNet');
+  if (chartLabels.length > 0) {
+    charts.histNet = new Chart(document.getElementById('chartHistNet'), {
+      type: 'bar',
+      data: { labels: chartLabels, datasets: [
+        { label: 'Marge nette', data: chartNets, backgroundColor: chartNets.map(v=>v>=0?'rgba(16,185,129,.5)':'rgba(239,68,68,.5)'), borderRadius: 4 },
+        { label: 'Target 4kâ¬', data: chartLabels.map(mk2 => MONTHLY_TARGETS[mk2.slice(5,7)] || 3032), type:'line', borderColor:'#f59e0b', borderDash:[5,5], pointRadius:0 },
+      ]},
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback:v=>fmtK(v)+'â¬' } } } }
+    });
+  }
+}
+
+// ===== INIT =====
+refresh();
+</script>
+</body>
+</html>
