@@ -183,6 +183,61 @@ tr:hover td{background:rgba(99,102,241,.03)}
     </div>
   </div>
 
+  <!-- ===== TODAY / YESTERDAY ===== -->
+  <div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap">
+    <!-- TODAY -->
+    <div style="flex:1;min-width:300px;background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(16,185,129,.02));border:1px solid rgba(16,185,129,.25);border-radius:12px;padding:18px 22px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-size:14px;font-weight:700;color:var(--green)">🟢 Aujourd'hui</div>
+        <div style="font-size:11px;color:var(--muted)" id="dayTodayDate">—</div>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Ventes</div>
+          <div style="font-size:28px;font-weight:800;line-height:1.2" id="dayTodayUnits">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">CA (redevances)</div>
+          <div style="font-size:28px;font-weight:800;line-height:1.2;color:var(--green)" id="dayTodayCA">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Ads HT</div>
+          <div style="font-size:18px;font-weight:600;color:var(--red);margin-top:4px" id="dayTodayAds">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Marge nette</div>
+          <div style="font-size:18px;font-weight:700;margin-top:4px" id="dayTodayNet">—</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px" id="dayTodayVsYesterday">—</div>
+    </div>
+    <!-- YESTERDAY -->
+    <div style="flex:1;min-width:300px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-size:14px;font-weight:700;color:var(--muted)">⏮ Hier</div>
+        <div style="font-size:11px;color:var(--muted)" id="dayYesterdayDate">—</div>
+      </div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Ventes</div>
+          <div style="font-size:28px;font-weight:800;line-height:1.2" id="dayYesterdayUnits">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">CA (redevances)</div>
+          <div style="font-size:28px;font-weight:800;line-height:1.2" id="dayYesterdayCA">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Ads HT</div>
+          <div style="font-size:18px;font-weight:600;color:var(--red);margin-top:4px" id="dayYesterdayAds">—</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Marge nette</div>
+          <div style="font-size:18px;font-weight:700;margin-top:4px" id="dayYesterdayNet">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== CURRENT MONTH KPIS ===== -->
   <div class="mega-kpi">
     <div class="mega-box highlight">
@@ -347,16 +402,16 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <script>
 // ===== BOOKS CONFIG =====
 const BOOKS = [
-  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:92,defaultReviews:151,defaultRating:4.3},
+  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:88,defaultReviews:153,defaultRating:4.3},
   {id:'roblox-t2',title:'Roblox T2',asin:'B0GMD3BN6N',identity:'Simon',defaultBSR:864,defaultReviews:29,defaultRating:4.6},
-  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:472,defaultReviews:148,defaultRating:4.6},
-  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:674,defaultReviews:264,defaultRating:4.5},
+  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:479,defaultReviews:148,defaultRating:4.6},
+  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:601,defaultReviews:264,defaultRating:4.5},
   {id:'gaspard-t2',title:'Gaspard T2',asin:'B0F9P8DGYV',identity:'M&V',defaultBSR:3614,defaultReviews:190,defaultRating:4.7},
   {id:'gaspard-t3',title:'Gaspard T3',asin:'B0F9DX17MV',identity:'M&V',defaultBSR:37925,defaultReviews:115,defaultRating:4.6},
   {id:'gaspard-t4',title:'Gaspard T4',asin:'B0F8VGYNL3',identity:'M&V',defaultBSR:91188,defaultReviews:72,defaultRating:4.6},
   {id:'gaspard-t5',title:'Gaspard T5',asin:'B0FT7ZVY8M',identity:'M&V',defaultBSR:8142,defaultReviews:28,defaultRating:4.5},
-  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:1782,defaultReviews:35,defaultRating:4.2},
-  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:4844,defaultReviews:41,defaultRating:4.2},
+  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:2528,defaultReviews:35,defaultRating:4.2},
+  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:4971,defaultReviews:42,defaultRating:4.2},
   {id:'petite-girafe',title:'Petite Girafe',asin:'B0D36H833M',identity:'M&V',defaultBSR:37267,defaultReviews:156,defaultRating:4.7},
   {id:'frisson',title:'Frisson Manchot',asin:'B0F91FT2ZT',identity:'M&V',defaultBSR:37516,defaultReviews:39,defaultRating:4.6},
   {id:'histoire-lit',title:'Histoire au Lit',asin:'B0F5PWMFSJ',identity:'M&V',defaultBSR:70138,defaultReviews:69,defaultRating:4.5},
@@ -667,6 +722,61 @@ function refresh() {
   if (acos !== '—' && parseFloat(acos) > 50) alertsDiv.innerHTML += '<div class="alert alert-bad">🔴 ACOS à ' + acos + '% — Marge fortement grevée par les pubs.</div>';
   else if (acos !== '—' && parseFloat(acos) > 35) alertsDiv.innerHTML += '<div class="alert alert-warn">⚠️ ACOS à ' + acos + '% — Au-dessus de la cible 35%.</div>';
   if (netMonth < 0) alertsDiv.innerHTML += '<div class="alert alert-bad">❌ Marge négative ce mois : ' + fmt(netMonth) + '€</div>';
+
+  // ---- TODAY / YESTERDAY ----
+  const todayStr = today;
+  const yesterdayDate = new Date(new Date(todayStr).getTime() - 86400000);
+  const yesterdayStr = yesterdayDate.toISOString().slice(0,10);
+  const todayEntry = entries.find(e => e.date === todayStr);
+  const yesterdayEntry = entries.find(e => e.date === yesterdayStr);
+
+  const dayNames = ['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+  const monthNames = ['jan','fév','mar','avr','mai','jun','jul','aoû','sep','oct','nov','déc'];
+  function fmtDateShort(d) {
+    const dt = new Date(d);
+    return dayNames[dt.getDay()] + ' ' + dt.getDate() + ' ' + monthNames[dt.getMonth()];
+  }
+
+  document.getElementById('dayTodayDate').textContent = fmtDateShort(todayStr);
+  document.getElementById('dayYesterdayDate').textContent = fmtDateShort(yesterdayStr);
+
+  if (todayEntry) {
+    const tNet = todayEntry.royalties - todayEntry.adsHT * 1.2;
+    document.getElementById('dayTodayUnits').textContent = fmt(todayEntry.units);
+    document.getElementById('dayTodayCA').textContent = fmt(todayEntry.royalties) + '€';
+    document.getElementById('dayTodayAds').textContent = fmt(todayEntry.adsHT) + '€';
+    document.getElementById('dayTodayNet').textContent = fmt(tNet) + '€';
+    document.getElementById('dayTodayNet').style.color = tNet >= 0 ? 'var(--green)' : 'var(--red)';
+    if (yesterdayEntry) {
+      const diff = todayEntry.royalties - yesterdayEntry.royalties;
+      const diffUnits = todayEntry.units - yesterdayEntry.units;
+      const arrow = diff >= 0 ? '↑' : '↓';
+      const col = diff >= 0 ? 'var(--green)' : 'var(--red)';
+      document.getElementById('dayTodayVsYesterday').innerHTML = '<span style="color:'+col+';font-weight:600">'+arrow+' '+fmt(Math.abs(diff))+'€ CA</span> et <span style="color:'+col+'">'+arrow+' '+Math.abs(diffUnits)+' ventes</span> vs hier';
+    } else {
+      document.getElementById('dayTodayVsYesterday').textContent = 'Pas de données hier pour comparer';
+    }
+  } else {
+    document.getElementById('dayTodayUnits').textContent = '—';
+    document.getElementById('dayTodayCA').textContent = '—';
+    document.getElementById('dayTodayAds').textContent = '—';
+    document.getElementById('dayTodayNet').textContent = '—';
+    document.getElementById('dayTodayVsYesterday').innerHTML = '<span style="color:var(--orange)">⚡ Pas encore de données aujourd\'hui</span>';
+  }
+
+  if (yesterdayEntry) {
+    const yNet = yesterdayEntry.royalties - yesterdayEntry.adsHT * 1.2;
+    document.getElementById('dayYesterdayUnits').textContent = fmt(yesterdayEntry.units);
+    document.getElementById('dayYesterdayCA').textContent = fmt(yesterdayEntry.royalties) + '€';
+    document.getElementById('dayYesterdayAds').textContent = fmt(yesterdayEntry.adsHT) + '€';
+    document.getElementById('dayYesterdayNet').textContent = fmt(yNet) + '€';
+    document.getElementById('dayYesterdayNet').style.color = yNet >= 0 ? 'var(--green)' : 'var(--red)';
+  } else {
+    document.getElementById('dayYesterdayUnits').textContent = '—';
+    document.getElementById('dayYesterdayCA').textContent = '—';
+    document.getElementById('dayYesterdayAds').textContent = '—';
+    document.getElementById('dayYesterdayNet').textContent = '—';
+  }
 
   // Goal progress (using YTD data)
   const goalPct = Math.min(100, (ytdNet / ANNUAL_GOAL * 100)).toFixed(1);
