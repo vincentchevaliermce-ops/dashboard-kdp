@@ -898,7 +898,8 @@ function refresh() {
       options: { responsive:true, maintainAspectRatio:false, scales: { y: { reverse: true, title: { display: true, text: 'BSR (plus bas = mieux)' } } } }
     });
   } else {
-    document.getElementById('chartBSR').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données BSR scrapées<br><small>Le scraper auto tourne 4×/jour</small></div>';
+    const elBSR = document.getElementById('chartBSR');
+    if (elBSR) elBSR.parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données BSR scrapées<br><small>Le scraper auto tourne 4×/jour</small></div>';
   }
 
   // ---- Ads tab ----
@@ -940,8 +941,10 @@ function refresh() {
       options: { responsive:true, maintainAspectRatio:false, scales: { y: { min:0, ticks: { callback: v=>v+'%' } } } }
     });
   } else {
-    document.getElementById('chartAdsDaily').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données Ads journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
-    document.getElementById('chartACOSDaily').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données Ads journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
+    const elAD = document.getElementById('chartAdsDaily');
+    if (elAD) elAD.parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données Ads journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
+    const elAC = document.getElementById('chartACOSDaily');
+    if (elAC) elAC.parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données Ads journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
   }
 
   // ---- Ads monthly history (using scraped + entries) ----
