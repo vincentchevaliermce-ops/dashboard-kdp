@@ -448,12 +448,12 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'KDP+Ads 08/03 (8j)',
-    units: 220,
-    royalties: 1150.68,
-    adsHT: 694.91,       // Ads 1-7 mars = 694.91€ (capture Vincent 08/03)
-    adsSales: 1698.17,   // = 694.91 / 0.4092
-    acos: 40.92,         // capture Vincent 08/03
+    source: 'Auto-scrapé 08/03 16h',
+    units: 243,
+    royalties: 1269.32,
+    adsHT: 741.17,       // 48 campagnes scrapées 08/03
+    adsSales: 1801.28,   // ventes Ads scrapées 08/03
+    acos: 41.15,         // 741.17/1801.28*100
     net: null            // calculated below
   }
 ];
@@ -464,6 +464,14 @@ MONTHLY_SCRAPED.forEach(m => {
     m.net = m.royalties - (m.adsHT * 1.2); // royalties - ads TTC
   }
 });
+
+// ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports) =====
+const DAILY_SCRAPED = {
+  scrapedAt: '2026-03-08T16:00:00',
+  today: { date: '2026-03-08', units: 13, royalties: 71.11, kenp: 0 },
+  yesterday: { date: '2026-03-07', units: 31, royalties: 157.56, kenp: 162 },
+  monthToDate: { units: 243, royalties: 1269.32, kenp: 879 }
+};
 
 // ===== DATA STORE =====
 function loadData(key, def) { try { return JSON.parse(localStorage.getItem('kdp_'+key)) || def; } catch { return def; } }
@@ -723,12 +731,14 @@ function refresh() {
   else if (acos !== '—' && parseFloat(acos) > 35) alertsDiv.innerHTML += '<div class="alert alert-warn">⚠️ ACOS à ' + acos + '% — Au-dessus de la cible 35%.</div>';
   if (netMonth < 0) alertsDiv.innerHTML += '<div class="alert alert-bad">❌ Marge négative ce mois : ' + fmt(netMonth) + '€</div>';
 
-  // ---- TODAY / YESTERDAY ----
+  // ---- TODAY / YESTERDAY (from DAILY_SCRAPED) ----
   const todayStr = today;
   const yesterdayDate = new Date(new Date(todayStr).getTime() - 86400000);
   const yesterdayStr = yesterdayDate.toISOString().slice(0,10);
-  const todayEntry = entries.find(e => e.date === todayStr);
-  const yesterdayEntry = entries.find(e => e.date === yesterdayStr);
+
+  // Use DAILY_SCRAPED data (auto-scraped from KDP Reports)
+  const todayEntry = DAILY_SCRAPED.today;
+  const yesterdayEntry = DAILY_SCRAPED.yesterday;
 
   const dayNames = ['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
   const monthNames = ['jan','fév','mar','avr','mai','jun','jul','aoû','sep','oct','nov','déc'];
@@ -737,45 +747,30 @@ function refresh() {
     return dayNames[dt.getDay()] + ' ' + dt.getDate() + ' ' + monthNames[dt.getMonth()];
   }
 
-  document.getElementById('dayTodayDate').textContent = fmtDateShort(todayStr);
-  document.getElementById('dayYesterdayDate').textContent = fmtDateShort(yesterdayStr);
+  document.getElementById('dayTodayDate').textContent = fmtDateShort(todayEntry.date);
+  document.getElementById('dayYesterdayDate').textContent = fmtDateShort(yesterdayEntry.date);
 
   if (todayEntry) {
-    const tNet = todayEntry.royalties - todayEntry.adsHT * 1.2;
     document.getElementById('dayTodayUnits').textContent = fmt(todayEntry.units);
-    document.getElementById('dayTodayCA').textContent = fmt(todayEntry.royalties) + '€';
-    document.getElementById('dayTodayAds').textContent = fmt(todayEntry.adsHT) + '€';
-    document.getElementById('dayTodayNet').textContent = fmt(tNet) + '€';
-    document.getElementById('dayTodayNet').style.color = tNet >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('dayTodayCA').textContent = todayEntry.royalties.toFixed(2) + '€';
+    document.getElementById('dayTodayAds').textContent = '—';
+    document.getElementById('dayTodayNet').textContent = todayEntry.royalties.toFixed(2) + '€';
+    document.getElementById('dayTodayNet').style.color = 'var(--green)';
     if (yesterdayEntry) {
       const diff = todayEntry.royalties - yesterdayEntry.royalties;
       const diffUnits = todayEntry.units - yesterdayEntry.units;
       const arrow = diff >= 0 ? '↑' : '↓';
       const col = diff >= 0 ? 'var(--green)' : 'var(--red)';
-      document.getElementById('dayTodayVsYesterday').innerHTML = '<span style="color:'+col+';font-weight:600">'+arrow+' '+fmt(Math.abs(diff))+'€ CA</span> et <span style="color:'+col+'">'+arrow+' '+Math.abs(diffUnits)+' ventes</span> vs hier';
-    } else {
-      document.getElementById('dayTodayVsYesterday').textContent = 'Pas de données hier pour comparer';
+      document.getElementById('dayTodayVsYesterday').innerHTML = '<span style="color:'+col+';font-weight:600">'+arrow+' '+Math.abs(diff).toFixed(0)+'€ CA</span> et <span style="color:'+col+'">'+arrow+' '+Math.abs(diffUnits)+' ventes</span> vs hier · <span style="color:var(--muted)">Scrapé ' + new Date(DAILY_SCRAPED.scrapedAt).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}) + '</span>';
     }
-  } else {
-    document.getElementById('dayTodayUnits').textContent = '—';
-    document.getElementById('dayTodayCA').textContent = '—';
-    document.getElementById('dayTodayAds').textContent = '—';
-    document.getElementById('dayTodayNet').textContent = '—';
-    document.getElementById('dayTodayVsYesterday').innerHTML = '<span style="color:var(--orange)">⚡ Pas encore de données aujourd\'hui</span>';
   }
 
   if (yesterdayEntry) {
-    const yNet = yesterdayEntry.royalties - yesterdayEntry.adsHT * 1.2;
     document.getElementById('dayYesterdayUnits').textContent = fmt(yesterdayEntry.units);
-    document.getElementById('dayYesterdayCA').textContent = fmt(yesterdayEntry.royalties) + '€';
-    document.getElementById('dayYesterdayAds').textContent = fmt(yesterdayEntry.adsHT) + '€';
-    document.getElementById('dayYesterdayNet').textContent = fmt(yNet) + '€';
-    document.getElementById('dayYesterdayNet').style.color = yNet >= 0 ? 'var(--green)' : 'var(--red)';
-  } else {
-    document.getElementById('dayYesterdayUnits').textContent = '—';
-    document.getElementById('dayYesterdayCA').textContent = '—';
+    document.getElementById('dayYesterdayCA').textContent = yesterdayEntry.royalties.toFixed(2) + '€';
     document.getElementById('dayYesterdayAds').textContent = '—';
-    document.getElementById('dayYesterdayNet').textContent = '—';
+    document.getElementById('dayYesterdayNet').textContent = yesterdayEntry.royalties.toFixed(2) + '€';
+    document.getElementById('dayYesterdayNet').style.color = 'var(--green)';
   }
 
   // Goal progress (using YTD data)
@@ -785,8 +780,8 @@ function refresh() {
   document.getElementById('goalCum').textContent = fmt(ytdNet) + '€ cumulé';
 
   // Last update
-  const scrapedDate = MONTHLY_SCRAPED.length > 0 ? MONTHLY_SCRAPED[MONTHLY_SCRAPED.length-1].source : '';
-  document.getElementById('lastUpdate').textContent = 'Données : ' + scrapedDate + ' · Auto 4×/jour';
+  const scrapedTime = DAILY_SCRAPED.scrapedAt ? new Date(DAILY_SCRAPED.scrapedAt).toLocaleString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+  document.getElementById('lastUpdate').textContent = 'Scrapé auto : ' + scrapedTime + ' · 4×/jour';
 
   // ---- Daily chart for current month ----
   if (me.length > 0) {
