@@ -476,6 +476,18 @@ const DAILY_SCRAPED = {
   // Yesterday 07/03: 111.43$US → 95.92€ | Sales 294.88$US → 253.88€ | 19 achats
 };
 
+// Données Ads journalières scrapées du graphique Amazon Ads (USD→EUR via ratio 0.8608)
+const DAILY_ADS_SCRAPED = [
+  { date: '2026-03-01', adsHT: 87.22, adsSales: 169.56, adsOrders: 12, acos: 51.45 },
+  { date: '2026-03-02', adsHT: 111.14, adsSales: 287.87, adsOrders: 23, acos: 38.61 },
+  { date: '2026-03-03', adsHT: 96.54, adsSales: 260.44, adsOrders: 20, acos: 37.07 },
+  { date: '2026-03-04', adsHT: 101.02, adsSales: 206.44, adsOrders: 16, acos: 48.94 },
+  { date: '2026-03-05', adsHT: 106.29, adsSales: 257.59, adsOrders: 20, acos: 41.26 },
+  { date: '2026-03-06', adsHT: 97.02, adsSales: 287.93, adsOrders: 22, acos: 33.70 },
+  { date: '2026-03-07', adsHT: 95.92, adsSales: 253.88, adsOrders: 19, acos: 37.79 },
+  { date: '2026-03-08', adsHT: 46.00, adsSales: 77.67, adsOrders: 6, acos: 59.23 },
+];
+
 // ===== DATA STORE =====
 function loadData(key, def) { try { return JSON.parse(localStorage.getItem('kdp_'+key)) || def; } catch { return def; } }
 function saveData(key, val) { localStorage.setItem('kdp_'+key, JSON.stringify(val)); }
@@ -895,22 +907,24 @@ function refresh() {
   document.getElementById('adsMonthACOS').style.color = acos !== '—' && parseFloat(acos) > 35 ? 'var(--orange)' : 'var(--green)';
   document.getElementById('adsMonthSales').textContent = fmt(totalAdsSales) + '€';
 
-  if (me.length > 0) {
-    const days = me.map(e=>e.date.slice(8));
+  // Use DAILY_ADS_SCRAPED (static scraped data) or fallback to me (localStorage)
+  const adsSource = DAILY_ADS_SCRAPED.length > 0 ? DAILY_ADS_SCRAPED : me;
+  if (adsSource.length > 0) {
+    const days = adsSource.map(e=>e.date.slice(8));
     destroyChart('adsDaily');
     charts.adsDaily = new Chart(document.getElementById('chartAdsDaily'), {
       type: 'bar',
       data: {
         labels: days,
         datasets: [
-          { label: 'Ads TTC', data: me.map(e=>e.adsHT), backgroundColor: 'rgba(239,68,68,.4)', borderRadius: 3 },
-          { label: 'Ventes Ads', data: me.map(e=>e.adsSales||0), backgroundColor: 'rgba(16,185,129,.4)', borderRadius: 3 },
+          { label: 'Ads TTC', data: adsSource.map(e=>(e.adsHT||0)*1.2), backgroundColor: 'rgba(239,68,68,.4)', borderRadius: 3 },
+          { label: 'Ventes Ads', data: adsSource.map(e=>e.adsSales||0), backgroundColor: 'rgba(16,185,129,.4)', borderRadius: 3 },
         ]
       },
       options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'€' } } } }
     });
 
-    const dailyACOS = me.map(e => e.adsSales > 0 ? (e.adsHT / e.adsSales * 100) : 0);
+    const dailyACOS = adsSource.map(e => e.adsSales > 0 ? (e.adsHT / e.adsSales * 100) : 0);
     destroyChart('acosDaily');
     charts.acosDaily = new Chart(document.getElementById('chartACOSDaily'), {
       type: 'line',
