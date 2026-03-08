@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KDP Control Center â Vincent Chevalier</title>
+<title>KDP Control Center — Vincent Chevalier</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
@@ -119,18 +119,18 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <body>
 
 <div class="topbar">
-  <h1>â¡ <span>KDP</span> Control Center</h1>
+  <h1>⚡ <span>KDP</span> Control Center</h1>
   <div class="topbar-right">
-    <span style="font-size:12px;color:var(--muted)" id="lastUpdate">â</span>
+    <span style="font-size:12px;color:var(--muted)" id="lastUpdate">—</span>
     <div class="live-dot"></div>
   </div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" data-tab="dashboard">ð Dashboard</div>
-  <div class="tab" data-tab="books">ð Livres & BSR</div>
-  <div class="tab" data-tab="ads">ð¢ Amazon Ads</div>
-  <div class="tab" data-tab="history">ð Historique</div>
+  <div class="tab active" data-tab="dashboard">📊 Dashboard</div>
+  <div class="tab" data-tab="books">📚 Livres & BSR</div>
+  <div class="tab" data-tab="ads">📢 Amazon Ads</div>
+  <div class="tab" data-tab="history">📅 Historique</div>
 </div>
 
 <!-- ================ DASHBOARD ================ -->
@@ -138,46 +138,46 @@ tr:hover td{background:rgba(99,102,241,.03)}
 
   <!-- BILLING ALERT -->
   <div class="alert alert-bad" id="billingAlert" style="margin-bottom:16px">
-    â ï¸ <b>ALERTE FACTURATION</b> â Amazon Ads : campagnes suspendues dans 3 pays en raison d'un problÃ¨me de facturation. VÃ©rifier immÃ©diatement dans le Campaign Manager.
+    ⚠️ <b>ALERTE FACTURATION</b> — Amazon Ads : campagnes suspendues dans 3 pays en raison d'un problème de facturation. Vérifier immédiatement dans le Campaign Manager.
   </div>
 
   <!-- ===== YTD CUMULATIVE SECTION ===== -->
   <div class="ytd-section">
-    <div class="ytd-header">ð <span>Cumul 2026</span> â Year-to-Date</div>
+    <div class="ytd-header">📈 <span>Cumul 2026</span> — Year-to-Date</div>
     <div class="ytd-kpis">
       <div class="ytd-box">
-        <div class="ytd-box-value up" id="ytdRoyalties">â</div>
+        <div class="ytd-box-value up" id="ytdRoyalties">—</div>
         <div class="ytd-box-label">Redevances totales</div>
         <div class="ytd-box-sub" id="ytdRoyaltiesSub">depuis jan 2026</div>
       </div>
       <div class="ytd-box">
-        <div class="ytd-box-value" style="color:var(--red)" id="ytdAdsTTC">â</div>
+        <div class="ytd-box-value" style="color:var(--red)" id="ytdAdsTTC">—</div>
         <div class="ytd-box-label">Budget pub TTC total</div>
         <div class="ytd-box-sub" id="ytdAdsSub">dont TVA 20%</div>
       </div>
       <div class="ytd-box" style="border-color:var(--accent)">
-        <div class="ytd-box-value" id="ytdNet">â</div>
-        <div class="ytd-box-label">Marge nette cumulÃ©e</div>
-        <div class="ytd-box-sub" id="ytdNetSub">objectif 48kâ¬</div>
+        <div class="ytd-box-value" id="ytdNet">—</div>
+        <div class="ytd-box-label">Marge nette cumulée</div>
+        <div class="ytd-box-sub" id="ytdNetSub">objectif 48k€</div>
       </div>
       <div class="ytd-box">
-        <div class="ytd-box-value" style="color:var(--cyan)" id="ytdUnits">â</div>
-        <div class="ytd-box-label">UnitÃ©s vendues</div>
+        <div class="ytd-box-value" style="color:var(--cyan)" id="ytdUnits">—</div>
+        <div class="ytd-box-label">Unités vendues</div>
         <div class="ytd-box-sub" id="ytdUnitsSub">total 2026</div>
       </div>
       <div class="ytd-box">
-        <div class="ytd-box-value" id="ytdACOS">â</div>
+        <div class="ytd-box-value" id="ytdACOS">—</div>
         <div class="ytd-box-label">ACOS YTD</div>
         <div class="ytd-box-sub" id="ytdACOSSub">cible &lt;35%</div>
       </div>
     </div>
     <div class="ytd-chart-wrap">
       <div class="ytd-chart-box" style="flex:2">
-        <div class="ytd-chart-title">Ãvolution mensuelle â Redevances vs Ads TTC vs Marge nette</div>
+        <div class="ytd-chart-title">Évolution mensuelle — Redevances vs Ads TTC vs Marge nette</div>
         <div style="height:200px"><canvas id="chartYTDMonthly"></canvas></div>
       </div>
       <div class="ytd-chart-box" style="flex:1">
-        <div class="ytd-chart-title">Progression objectif 48kâ¬ net</div>
+        <div class="ytd-chart-title">Progression objectif 48k€ net</div>
         <div style="height:200px"><canvas id="chartYTDGoal"></canvas></div>
       </div>
     </div>
@@ -186,27 +186,27 @@ tr:hover td{background:rgba(99,102,241,.03)}
   <!-- ===== CURRENT MONTH KPIS ===== -->
   <div class="mega-kpi">
     <div class="mega-box highlight">
-      <div class="mega-label">ð° Marge nette mois en cours</div>
-      <div class="mega-value" id="dashNet">â</div>
-      <div class="mega-sub" id="dashNetSub">â</div>
+      <div class="mega-label">💰 Marge nette mois en cours</div>
+      <div class="mega-value" id="dashNet">—</div>
+      <div class="mega-sub" id="dashNetSub">—</div>
     </div>
     <div class="mega-box">
-      <div class="mega-label">ð¦ Ventes mois en cours</div>
-      <div class="mega-value" id="dashUnits">â</div>
-      <div class="mega-sub" id="dashUnitsSub">â</div>
+      <div class="mega-label">📦 Ventes mois en cours</div>
+      <div class="mega-value" id="dashUnits">—</div>
+      <div class="mega-sub" id="dashUnitsSub">—</div>
     </div>
     <div class="mega-box">
-      <div class="mega-label">ðµ Redevances mois en cours</div>
-      <div class="mega-value" id="dashCA">â</div>
+      <div class="mega-label">💵 Redevances mois en cours</div>
+      <div class="mega-value" id="dashCA">—</div>
     </div>
     <div class="mega-box">
-      <div class="mega-label">ð¢ DÃ©penses Ads TTC mois</div>
-      <div class="mega-value" id="dashAds">â</div>
-      <div class="mega-sub" id="dashAdsSub">â</div>
+      <div class="mega-label">📢 Dépenses Ads TTC mois</div>
+      <div class="mega-value" id="dashAds">—</div>
+      <div class="mega-sub" id="dashAdsSub">—</div>
     </div>
     <div class="mega-box">
-      <div class="mega-label">ð ACOS mois</div>
-      <div class="mega-value" id="dashACOS">â</div>
+      <div class="mega-label">📈 ACOS mois</div>
+      <div class="mega-value" id="dashACOS">—</div>
       <div class="mega-sub">Cible &lt;35%</div>
     </div>
   </div>
@@ -215,7 +215,7 @@ tr:hover td{background:rgba(99,102,241,.03)}
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">Ventes & Marge journaliÃ¨res <span class="tag">mois en cours</span></div>
+      <div class="card-title">Ventes & Marge journalières <span class="tag">mois en cours</span></div>
       <div class="chart-wrap"><canvas id="chartDailyMonth"></canvas></div>
     </div>
     <div class="card">
@@ -226,7 +226,7 @@ tr:hover td{background:rgba(99,102,241,.03)}
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">Top BSR aujourd'hui <span class="tag" id="tagBSRDate">â</span></div>
+      <div class="card-title">Top BSR aujourd'hui <span class="tag" id="tagBSRDate">—</span></div>
       <table>
         <thead><tr><th>Livre</th><th>BSR</th><th>Tendance</th></tr></thead>
         <tbody id="dashBSRTable"></tbody>
@@ -235,14 +235,14 @@ tr:hover td{background:rgba(99,102,241,.03)}
   </div>
 
   <div class="card">
-    <div class="card-title">Objectif 2026 â 48 000â¬ net (4kâ¬/mois lissÃ©)</div>
+    <div class="card-title">Objectif 2026 — 48 000€ net (4k€/mois lissé)</div>
     <div style="display:flex;align-items:center;gap:16px">
       <div class="pbar" style="flex:1;height:12px"><div class="pfill" id="goalBar" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
       <span style="font-size:14px;font-weight:700" id="goalPct">0%</span>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--muted)">
-      <span id="goalCum">0â¬ cumulÃ©</span>
-      <span>Objectif : 48 000â¬</span>
+      <span id="goalCum">0€ cumulé</span>
+      <span>Objectif : 48 000€</span>
     </div>
   </div>
 </div>
@@ -251,17 +251,17 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <div class="container tab-content hidden" id="tab-books">
 
   <div class="card">
-    <div class="card-title">Classement BSR actuel <span class="tag">Auto-scrapÃ©</span></div>
+    <div class="card-title">Classement BSR actuel <span class="tag">Auto-scrapé</span></div>
     <div class="scroll-y">
       <table>
-        <thead><tr><th>Livre</th><th>BSR actuel</th><th>Tendance 7j</th><th>DerniÃ¨re MÃ J</th></tr></thead>
+        <thead><tr><th>Livre</th><th>BSR actuel</th><th>Tendance 7j</th><th>Dernière MàJ</th></tr></thead>
         <tbody id="bsrTable"></tbody>
       </table>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">Ãvolution BSR â Top 5 <span class="tag">30 derniers jours</span></div>
+    <div class="card-title">Évolution BSR — Top 5 <span class="tag">30 derniers jours</span></div>
     <div class="chart-wrap" style="height:300px"><canvas id="chartBSR"></canvas></div>
   </div>
 </div>
@@ -272,29 +272,29 @@ tr:hover td{background:rgba(99,102,241,.03)}
   <div class="mega-kpi">
     <div class="mega-box">
       <div class="mega-label">Budget Ads HT mois</div>
-      <div class="mega-value" id="adsMonthHT">â</div>
+      <div class="mega-value" id="adsMonthHT">—</div>
     </div>
     <div class="mega-box">
       <div class="mega-label">TVA 20% mois</div>
-      <div class="mega-value" id="adsMonthTVA">â</div>
+      <div class="mega-value" id="adsMonthTVA">—</div>
     </div>
     <div class="mega-box">
       <div class="mega-label">Budget TTC total mois</div>
-      <div class="mega-value" id="adsMonthTTC">â</div>
+      <div class="mega-value" id="adsMonthTTC">—</div>
     </div>
     <div class="mega-box">
       <div class="mega-label">ACOS mois</div>
-      <div class="mega-value" id="adsMonthACOS">â</div>
+      <div class="mega-value" id="adsMonthACOS">—</div>
     </div>
     <div class="mega-box">
       <div class="mega-label">Ventes Ads mois</div>
-      <div class="mega-value" id="adsMonthSales">â</div>
+      <div class="mega-value" id="adsMonthSales">—</div>
     </div>
   </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-title">DÃ©penses Ads vs Ventes Ads <span class="tag">quotidien</span></div>
+      <div class="card-title">Dépenses Ads vs Ventes Ads <span class="tag">quotidien</span></div>
       <div class="chart-wrap"><canvas id="chartAdsDaily"></canvas></div>
     </div>
     <div class="card">
@@ -304,7 +304,7 @@ tr:hover td{background:rgba(99,102,241,.03)}
   </div>
 
   <div class="card">
-    <div class="card-title">Historique Ads â Mensuel (donnÃ©es scrapÃ©es)</div>
+    <div class="card-title">Historique Ads — Mensuel (données scrapées)</div>
     <table>
       <thead><tr><th>Mois</th><th>Ads HT</th><th>TVA 20%</th><th>Ads TTC</th><th>Ventes Ads</th><th>ACOS</th><th>Redevances</th><th>Marge nette</th></tr></thead>
       <tbody id="adsHistTable"></tbody>
@@ -318,10 +318,10 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <div class="container tab-content hidden" id="tab-history">
 
   <div class="card">
-    <div class="card-title">ð Historique mensuel</div>
+    <div class="card-title">📅 Historique mensuel</div>
     <div class="form-row">
       <div class="form-group">
-        <label>PÃ©riode</label>
+        <label>Période</label>
         <select id="histPeriod" onchange="renderHistory()">
           <option value="all">Tout</option>
           <option value="3">3 derniers mois</option>
@@ -331,7 +331,7 @@ tr:hover td{background:rgba(99,102,241,.03)}
     </div>
     <div class="scroll-y">
       <table>
-        <thead><tr><th>Mois</th><th>Source</th><th>UnitÃ©s</th><th>Redevances</th><th>Ads HT</th><th>TVA</th><th>Ads TTC</th><th>ACOS</th><th>Marge nette</th></tr></thead>
+        <thead><tr><th>Mois</th><th>Source</th><th>Unités</th><th>Redevances</th><th>Ads HT</th><th>TVA</th><th>Ads TTC</th><th>ACOS</th><th>Marge nette</th></tr></thead>
         <tbody id="histTable"></tbody>
       </table>
     </div>
@@ -360,8 +360,8 @@ const BOOKS = [
   {id:'petite-girafe',title:'Petite Girafe',asin:'B0D36H833M',identity:'M&V',defaultBSR:37267,defaultReviews:156,defaultRating:4.7},
   {id:'frisson',title:'Frisson Manchot',asin:'B0F91FT2ZT',identity:'M&V',defaultBSR:37516,defaultReviews:39,defaultRating:4.6},
   {id:'histoire-lit',title:'Histoire au Lit',asin:'B0F5PWMFSJ',identity:'M&V',defaultBSR:70138,defaultReviews:69,defaultRating:4.5},
-  {id:'livre-anime',title:'Mon Livre AnimÃ©',asin:'B0FTTVMC4F',identity:'M&V',defaultBSR:522530,defaultReviews:23,defaultRating:5.0},
-  {id:'enquete-savane',title:'EnquÃªte Savane',asin:'B0DP2H38V6',identity:'M&V',defaultBSR:278998,defaultReviews:51,defaultRating:5.0},
+  {id:'livre-anime',title:'Mon Livre Animé',asin:'B0FTTVMC4F',identity:'M&V',defaultBSR:522530,defaultReviews:23,defaultRating:5.0},
+  {id:'enquete-savane',title:'Enquête Savane',asin:'B0DP2H38V6',identity:'M&V',defaultBSR:278998,defaultReviews:51,defaultRating:5.0},
   {id:'brawl-stars',title:'Brawl Stars',asin:'B0FXJ4TW6G',identity:'Simon',defaultBSR:361246,defaultReviews:17,defaultRating:4.4},
 ];
 
@@ -373,18 +373,18 @@ const MONTHLY_SCRAPED = [
     label: 'Janvier 2026',
     source: 'KDP Reports 08/03',
     units: 1664,
-    royalties: 4679.25,  // = YTD 11194.93 - FÃ©v(5365) - Mars(1150.68)
-    adsHT: 3038,         // from goals-2026.md (CoÃ»ts 3646 TTC / 1.2)
+    royalties: 4679.25,  // = YTD 11194.93 - Fév(5365) - Mars(1150.68)
+    adsHT: 3038,         // from goals-2026.md (Coûts 3646 TTC / 1.2)
     adsSales: 5149,      // = adsHT/ACOS = 3038/0.59
     acos: 59.0,
     net: null             // calculated below
   },
   {
     month: '2026-02',
-    label: 'FÃ©vrier 2026',
-    source: 'ScrapÃ© 07/03',
+    label: 'Février 2026',
+    source: 'Scrapé 07/03',
     units: 1045,         // KDP Reports 08/03
-    royalties: 5365,     // FR 5218.58 brochÃ©s + 8.51 ebooks + DE 9.13 + ES 11.91 + BE 69.75 + ~47 non-EUR
+    royalties: 5365,     // FR 5218.58 brochés + 8.51 ebooks + DE 9.13 + ES 11.91 + BE 69.75 + ~47 non-EUR
     adsHT: 2751.30,      // confirmed total all campaigns (no filters)
     adsSales: 8431.79,   // confirmed matching top bar
     acos: 32.63,
@@ -396,7 +396,7 @@ const MONTHLY_SCRAPED = [
     source: 'KDP+Ads 08/03 (8j)',
     units: 220,
     royalties: 1150.68,
-    adsHT: 694.91,       // Ads 1-7 mars = 694.91â¬ (capture Vincent 08/03)
+    adsHT: 694.91,       // Ads 1-7 mars = 694.91€ (capture Vincent 08/03)
     adsSales: 1698.17,   // = 694.91 / 0.4092
     acos: 40.92,         // capture Vincent 08/03
     net: null            // calculated below
@@ -474,7 +474,7 @@ function getMonthlyData(monthKey) {
 }
 
 // ===== FORMAT HELPERS =====
-function fmt(n) { return n == null ? 'â' : n.toLocaleString('fr-FR', {maximumFractionDigits:0}); }
+function fmt(n) { return n == null ? '—' : n.toLocaleString('fr-FR', {maximumFractionDigits:0}); }
 function fmtK(n) { return n >= 1000 ? (n/1000).toFixed(1).replace('.0','') + 'k' : fmt(n); }
 
 // ===== TARGETS =====
@@ -530,36 +530,36 @@ function refresh() {
 
   const ytdAdsTTC = ytdAdsHT * 1.2;
 
-  document.getElementById('ytdRoyalties').textContent = fmt(ytdRoy) + 'â¬';
-  document.getElementById('ytdRoyaltiesSub').textContent = ytdMonths.length + ' mois Â· depuis jan 2026';
-  document.getElementById('ytdAdsTTC').textContent = fmt(ytdAdsTTC) + 'â¬';
-  document.getElementById('ytdAdsSub').textContent = 'HT ' + fmt(ytdAdsHT) + 'â¬ + TVA ' + fmt(ytdAdsHT*0.2) + 'â¬';
-  document.getElementById('ytdNet').textContent = fmt(ytdNet) + 'â¬';
+  document.getElementById('ytdRoyalties').textContent = fmt(ytdRoy) + '€';
+  document.getElementById('ytdRoyaltiesSub').textContent = ytdMonths.length + ' mois · depuis jan 2026';
+  document.getElementById('ytdAdsTTC').textContent = fmt(ytdAdsTTC) + '€';
+  document.getElementById('ytdAdsSub').textContent = 'HT ' + fmt(ytdAdsHT) + '€ + TVA ' + fmt(ytdAdsHT*0.2) + '€';
+  document.getElementById('ytdNet').textContent = fmt(ytdNet) + '€';
   document.getElementById('ytdNet').style.color = ytdNet >= 0 ? 'var(--green)' : 'var(--red)';
   const ytdPct = (ytdNet / ANNUAL_GOAL * 100).toFixed(1);
-  // Calcul target cumulÃ© Ã  ce stade de l'annÃ©e
+  // Calcul target cumulé à ce stade de l'année
   const currentMonth = parseInt(new Date().toISOString().slice(5,7));
   let ytdTarget = 0;
   for (let i = 1; i <= currentMonth; i++) {
     ytdTarget += MONTHLY_TARGETS[String(i).padStart(2,'0')] || 0;
   }
   const vsTarget = ytdNet - ytdTarget;
-  const vsLabel = vsTarget >= 0 ? '+' + fmt(vsTarget) + 'â¬ vs target' : fmt(vsTarget) + 'â¬ vs target';
-  document.getElementById('ytdNetSub').textContent = ytdPct + '% Â· ' + vsLabel;
+  const vsLabel = vsTarget >= 0 ? '+' + fmt(vsTarget) + '€ vs target' : fmt(vsTarget) + '€ vs target';
+  document.getElementById('ytdNetSub').textContent = ytdPct + '% · ' + vsLabel;
   document.getElementById('ytdUnits').textContent = fmt(ytdUnits);
   document.getElementById('ytdUnitsSub').textContent = 'total 2026';
 
   // ACOS YTD
-  const ytdACOS = ytdAdsSales > 0 ? (ytdAdsHT / ytdAdsSales * 100).toFixed(1) : 'â';
-  document.getElementById('ytdACOS').textContent = ytdACOS !== 'â' ? ytdACOS + '%' : 'â';
-  document.getElementById('ytdACOS').style.color = ytdACOS !== 'â' && parseFloat(ytdACOS) > 35 ? 'var(--orange)' : 'var(--green)';
-  document.getElementById('ytdACOSSub').textContent = ytdACOS !== 'â' ? 'Ads HT ' + fmt(ytdAdsHT) + 'â¬ / Ventes ' + fmt(ytdAdsSales) + 'â¬' : 'cible <35%';
+  const ytdACOS = ytdAdsSales > 0 ? (ytdAdsHT / ytdAdsSales * 100).toFixed(1) : '—';
+  document.getElementById('ytdACOS').textContent = ytdACOS !== '—' ? ytdACOS + '%' : '—';
+  document.getElementById('ytdACOS').style.color = ytdACOS !== '—' && parseFloat(ytdACOS) > 35 ? 'var(--orange)' : 'var(--green)';
+  document.getElementById('ytdACOSSub').textContent = ytdACOS !== '—' ? 'Ads HT ' + fmt(ytdAdsHT) + '€ / Ventes ' + fmt(ytdAdsSales) + '€' : 'cible <35%';
 
   // YTD Monthly Chart
   if (ytdMonths.length > 0) {
     const mLabels = ytdMonths.map(m => {
       const [y,mo] = m.month.split('-');
-      return ['Jan','FÃ©v','Mar','Avr','Mai','Jun','Jul','AoÃ»','Sep','Oct','Nov','DÃ©c'][parseInt(mo)-1];
+      return ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][parseInt(mo)-1];
     });
 
     destroyChart('ytdMonthly');
@@ -576,7 +576,7 @@ function refresh() {
       },
       options: {
         responsive: true, maintainAspectRatio: false,
-        scales: { y: { ticks: { callback: v => fmtK(v) + 'â¬' } } },
+        scales: { y: { ticks: { callback: v => fmtK(v) + '€' } } },
         plugins: { legend: { labels: { boxWidth: 12 } } }
       }
     });
@@ -600,7 +600,7 @@ function refresh() {
         responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ctx.label + ' : ' + fmt(ctx.raw) + 'â¬' } }
+          tooltip: { callbacks: { label: ctx => ctx.label + ' : ' + fmt(ctx.raw) + '€' } }
         }
       },
       plugins: [{
@@ -615,7 +615,7 @@ function refresh() {
           ctx.fillText(ytdPct + '%', left + width/2, top + height/2 - 8);
           ctx.font = '11px Inter, sans-serif';
           ctx.fillStyle = '#6b6f80';
-          ctx.fillText(fmt(achieved) + 'â¬ / 48kâ¬', left + width/2, top + height/2 + 14);
+          ctx.fillText(fmt(achieved) + '€ / 48k€', left + width/2, top + height/2 + 14);
           ctx.restore();
         }
       }]
@@ -634,7 +634,7 @@ function refresh() {
     totalTVA = totalAdsHT * 0.2;
     totalTTC = totalAdsHT + totalTVA;
     totalAdsSales = me.reduce((s,e) => s + e.adsSales, 0);
-    acos = totalAdsSales > 0 ? ((totalAdsHT / totalAdsSales) * 100).toFixed(1) : 'â';
+    acos = totalAdsSales > 0 ? ((totalAdsHT / totalAdsSales) * 100).toFixed(1) : '—';
     netMonth = totalRoy - totalTTC;
   } else if (currentMonthData) {
     totalUnits = currentMonthData.units;
@@ -646,37 +646,37 @@ function refresh() {
     acos = currentMonthData.acos.toFixed(1);
     netMonth = currentMonthData.net;
   } else {
-    totalUnits = 0; totalRoy = 0; totalAdsHT = 0; totalTVA = 0; totalTTC = 0; totalAdsSales = 0; acos = 'â'; netMonth = 0;
+    totalUnits = 0; totalRoy = 0; totalAdsHT = 0; totalTVA = 0; totalTTC = 0; totalAdsSales = 0; acos = '—'; netMonth = 0;
   }
 
-  document.getElementById('dashNet').textContent = fmt(netMonth) + 'â¬';
+  document.getElementById('dashNet').textContent = fmt(netMonth) + '€';
   document.getElementById('dashNet').style.color = netMonth >= 0 ? 'var(--green)' : 'var(--red)';
-  document.getElementById('dashNetSub').textContent = 'Redevances ' + fmt(totalRoy) + 'â¬ â Ads TTC ' + fmt(totalTTC) + 'â¬';
+  document.getElementById('dashNetSub').textContent = 'Redevances ' + fmt(totalRoy) + '€ − Ads TTC ' + fmt(totalTTC) + '€';
   document.getElementById('dashUnits').textContent = fmt(totalUnits);
-  document.getElementById('dashUnitsSub').textContent = 'donnÃ©es auto-scrapÃ©es / ~' + new Date(today).getDate() + ' jours Ã©coulÃ©s';
-  document.getElementById('dashCA').textContent = fmt(totalRoy) + 'â¬';
-  document.getElementById('dashAds').textContent = fmt(totalTTC) + 'â¬';
-  document.getElementById('dashAdsSub').textContent = 'HT ' + fmt(totalAdsHT) + 'â¬ + TVA ' + fmt(totalTVA) + 'â¬';
-  document.getElementById('dashACOS').textContent = acos !== 'â' ? acos + '%' : 'â';
-  document.getElementById('dashACOS').style.color = acos !== 'â' && parseFloat(acos) > 35 ? 'var(--orange)' : 'var(--green)';
+  document.getElementById('dashUnitsSub').textContent = 'données auto-scrapées / ~' + new Date(today).getDate() + ' jours écoulés';
+  document.getElementById('dashCA').textContent = fmt(totalRoy) + '€';
+  document.getElementById('dashAds').textContent = fmt(totalTTC) + '€';
+  document.getElementById('dashAdsSub').textContent = 'HT ' + fmt(totalAdsHT) + '€ + TVA ' + fmt(totalTVA) + '€';
+  document.getElementById('dashACOS').textContent = acos !== '—' ? acos + '%' : '—';
+  document.getElementById('dashACOS').style.color = acos !== '—' && parseFloat(acos) > 35 ? 'var(--orange)' : 'var(--green)';
 
   // Alerts
   const alertsDiv = document.getElementById('dashAlerts');
   alertsDiv.innerHTML = '';
-  if (me.length === 0 && !currentMonthData) alertsDiv.innerHTML += '<div class="alert alert-warn">ð Aucune donnÃ©e ce mois. Les donnÃ©es seront scrapÃ©es automatiquement 4Ã/jour.</div>';
-  if (acos !== 'â' && parseFloat(acos) > 50) alertsDiv.innerHTML += '<div class="alert alert-bad">ð´ ACOS Ã  ' + acos + '% â Marge fortement grevÃ©e par les pubs.</div>';
-  else if (acos !== 'â' && parseFloat(acos) > 35) alertsDiv.innerHTML += '<div class="alert alert-warn">â ï¸ ACOS Ã  ' + acos + '% â Au-dessus de la cible 35%.</div>';
-  if (netMonth < 0) alertsDiv.innerHTML += '<div class="alert alert-bad">â Marge nÃ©gative ce mois : ' + fmt(netMonth) + 'â¬</div>';
+  if (me.length === 0 && !currentMonthData) alertsDiv.innerHTML += '<div class="alert alert-warn">📝 Aucune donnée ce mois. Les données seront scrapées automatiquement 4×/jour.</div>';
+  if (acos !== '—' && parseFloat(acos) > 50) alertsDiv.innerHTML += '<div class="alert alert-bad">🔴 ACOS à ' + acos + '% — Marge fortement grevée par les pubs.</div>';
+  else if (acos !== '—' && parseFloat(acos) > 35) alertsDiv.innerHTML += '<div class="alert alert-warn">⚠️ ACOS à ' + acos + '% — Au-dessus de la cible 35%.</div>';
+  if (netMonth < 0) alertsDiv.innerHTML += '<div class="alert alert-bad">❌ Marge négative ce mois : ' + fmt(netMonth) + '€</div>';
 
   // Goal progress (using YTD data)
   const goalPct = Math.min(100, (ytdNet / ANNUAL_GOAL * 100)).toFixed(1);
   document.getElementById('goalBar').style.width = goalPct + '%';
   document.getElementById('goalPct').textContent = goalPct + '%';
-  document.getElementById('goalCum').textContent = fmt(ytdNet) + 'â¬ cumulÃ©';
+  document.getElementById('goalCum').textContent = fmt(ytdNet) + '€ cumulé';
 
   // Last update
   const scrapedDate = MONTHLY_SCRAPED.length > 0 ? MONTHLY_SCRAPED[MONTHLY_SCRAPED.length-1].source : '';
-  document.getElementById('lastUpdate').textContent = 'DonnÃ©es : ' + scrapedDate + ' Â· Auto 4Ã/jour';
+  document.getElementById('lastUpdate').textContent = 'Données : ' + scrapedDate + ' · Auto 4×/jour';
 
   // ---- Daily chart for current month ----
   if (me.length > 0) {
@@ -693,7 +693,7 @@ function refresh() {
           { label: 'Marge nette', data: nets, backgroundColor: nets.map(v => v>=0 ? 'rgba(16,185,129,.5)' : 'rgba(239,68,68,.5)'), borderRadius: 3 },
         ]
       },
-      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'â¬' } } } }
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'€' } } } }
     });
 
     let cum = 0;
@@ -707,11 +707,11 @@ function refresh() {
           { label: 'Cumul net', data: cumData, borderColor: cumData[cumData.length-1] >= 0 ? '#10b981' : '#ef4444', fill: true, backgroundColor: cumData[cumData.length-1] >= 0 ? 'rgba(16,185,129,.1)' : 'rgba(239,68,68,.1)', tension: .3, pointRadius: 3 },
         ]
       },
-      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'â¬' } } } }
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'€' } } } }
     });
   } else {
-    document.getElementById('chartDailyMonth').parentElement.innerHTML = '<div class="empty-chart">ð En attente des premiÃ¨res donnÃ©es journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
-    document.getElementById('chartCumNet').parentElement.innerHTML = '<div class="empty-chart">ð En attente des premiÃ¨res donnÃ©es journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+    document.getElementById('chartDailyMonth').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des premières données journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
+    document.getElementById('chartCumNet').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des premières données journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
   }
 
   // ---- BSR Dashboard Table ----
@@ -727,14 +727,14 @@ function refresh() {
     if (!book) return;
     const cls = data.bsr < 1000 ? 'hot' : data.bsr < 10000 ? 'warm' : '';
     const prev = bsrData.filter(d => d.bookId === id).slice(-7);
-    let trend = 'â';
+    let trend = '—';
     if (prev.length >= 2) {
       const diff = prev[prev.length-1].bsr - prev[0].bsr;
-      trend = diff < 0 ? '<span class="up">â +' + Math.abs(diff) + ' places</span>' : diff > 0 ? '<span class="down">â -' + diff + ' places</span>' : 'â stable';
+      trend = diff < 0 ? '<span class="up">↗ +' + Math.abs(diff) + ' places</span>' : diff > 0 ? '<span class="down">↘ -' + diff + ' places</span>' : '→ stable';
     }
     bsrTableEl.innerHTML += '<tr><td><b>' + book.title + '</b></td><td class="' + cls + '">#' + data.bsr.toLocaleString('fr') + '</td><td>' + trend + '</td></tr>';
   });
-  document.getElementById('tagBSRDate').textContent = bsrSorted.length > 0 ? bsrSorted[0][1].date : 'â';
+  document.getElementById('tagBSRDate').textContent = bsrSorted.length > 0 ? bsrSorted[0][1].date : '—';
 
   // ---- BSR table (books tab) ----
   const bsrTBody = document.getElementById('bsrTable');
@@ -744,10 +744,10 @@ function refresh() {
     if (!book) return;
     const cls = data.bsr < 1000 ? 'hot' : data.bsr < 10000 ? 'warm' : data.bsr > 100000 ? 'cold' : '';
     const history = bsrData.filter(d => d.bookId === id).slice(-7);
-    let trend7 = 'â';
+    let trend7 = '—';
     if (history.length >= 2) {
       const diff = history[history.length-1].bsr - history[0].bsr;
-      trend7 = diff < 0 ? '<span class="up">â ' + Math.abs(diff) + '</span>' : diff > 0 ? '<span class="down">â ' + diff + '</span>' : 'â';
+      trend7 = diff < 0 ? '<span class="up">↗ ' + Math.abs(diff) + '</span>' : diff > 0 ? '<span class="down">↘ ' + diff + '</span>' : '→';
     }
     bsrTBody.innerHTML += '<tr><td><b>' + book.title + '</b></td><td class="' + cls + '">#' + data.bsr.toLocaleString('fr') + '</td><td>' + trend7 + '</td><td style="color:var(--muted)">' + data.date + '</td></tr>';
   });
@@ -772,16 +772,16 @@ function refresh() {
       options: { responsive:true, maintainAspectRatio:false, scales: { y: { reverse: true, title: { display: true, text: 'BSR (plus bas = mieux)' } } } }
     });
   } else {
-    document.getElementById('chartBSR').parentElement.innerHTML = '<div class="empty-chart">ð En attente des donnÃ©es BSR scrapÃ©es<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+    document.getElementById('chartBSR').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données BSR scrapées<br><small>Le scraper auto tourne 4×/jour</small></div>';
   }
 
   // ---- Ads tab ----
-  document.getElementById('adsMonthHT').textContent = fmt(totalAdsHT) + 'â¬';
-  document.getElementById('adsMonthTVA').textContent = fmt(totalTVA) + 'â¬';
-  document.getElementById('adsMonthTTC').textContent = fmt(totalTTC) + 'â¬';
-  document.getElementById('adsMonthACOS').textContent = acos !== 'â' ? acos + '%' : 'â';
-  document.getElementById('adsMonthACOS').style.color = acos !== 'â' && parseFloat(acos) > 35 ? 'var(--orange)' : 'var(--green)';
-  document.getElementById('adsMonthSales').textContent = fmt(totalAdsSales) + 'â¬';
+  document.getElementById('adsMonthHT').textContent = fmt(totalAdsHT) + '€';
+  document.getElementById('adsMonthTVA').textContent = fmt(totalTVA) + '€';
+  document.getElementById('adsMonthTTC').textContent = fmt(totalTTC) + '€';
+  document.getElementById('adsMonthACOS').textContent = acos !== '—' ? acos + '%' : '—';
+  document.getElementById('adsMonthACOS').style.color = acos !== '—' && parseFloat(acos) > 35 ? 'var(--orange)' : 'var(--green)';
+  document.getElementById('adsMonthSales').textContent = fmt(totalAdsSales) + '€';
 
   if (me.length > 0) {
     const days = me.map(e=>e.date.slice(8));
@@ -795,7 +795,7 @@ function refresh() {
           { label: 'Ventes Ads', data: me.map(e=>e.adsSales||0), backgroundColor: 'rgba(16,185,129,.4)', borderRadius: 3 },
         ]
       },
-      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'â¬' } } } }
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback: v=>v+'€' } } } }
     });
 
     const dailyACOS = me.map(e => e.adsSales > 0 ? (e.adsHT / e.adsSales * 100) : 0);
@@ -812,8 +812,8 @@ function refresh() {
       options: { responsive:true, maintainAspectRatio:false, scales: { y: { min:0, ticks: { callback: v=>v+'%' } } } }
     });
   } else {
-    document.getElementById('chartAdsDaily').parentElement.innerHTML = '<div class="empty-chart">ð En attente des donnÃ©es Ads journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
-    document.getElementById('chartACOSDaily').parentElement.innerHTML = '<div class="empty-chart">ð En attente des donnÃ©es Ads journaliÃ¨res<br><small>Le scraper auto tourne 4Ã/jour</small></div>';
+    document.getElementById('chartAdsDaily').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données Ads journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
+    document.getElementById('chartACOSDaily').parentElement.innerHTML = '<div class="empty-chart">📊 En attente des données Ads journalières<br><small>Le scraper auto tourne 4×/jour</small></div>';
   }
 
   // ---- Ads monthly history (using scraped + entries) ----
@@ -831,9 +831,9 @@ function refresh() {
     if (!md) return;
     const tv = md.adsHT * 0.2;
     const tc = md.adsHT + tv;
-    const ac2 = md.adsSales > 0 ? (md.adsHT/md.adsSales*100).toFixed(1)+'%' : 'â';
+    const ac2 = md.adsSales > 0 ? (md.adsHT/md.adsSales*100).toFixed(1)+'%' : '—';
     const n2 = md.net;
-    adsHistBody.innerHTML += '<tr><td><b>'+mk2+'</b> <span style="color:var(--dim);font-size:10px">'+md.source+'</span></td><td>'+fmt(md.adsHT)+'â¬</td><td>'+fmt(tv)+'â¬</td><td>'+fmt(tc)+'â¬</td><td>'+fmt(md.adsSales)+'â¬</td><td>'+ac2+'</td><td>'+fmt(md.royalties)+'â¬</td><td class="'+(n2>=0?'up':'down')+'">'+fmt(n2)+'â¬</td></tr>';
+    adsHistBody.innerHTML += '<tr><td><b>'+mk2+'</b> <span style="color:var(--dim);font-size:10px">'+md.source+'</span></td><td>'+fmt(md.adsHT)+'€</td><td>'+fmt(tv)+'€</td><td>'+fmt(tc)+'€</td><td>'+fmt(md.adsSales)+'€</td><td>'+ac2+'</td><td>'+fmt(md.royalties)+'€</td><td class="'+(n2>=0?'up':'down')+'">'+fmt(n2)+'€</td></tr>';
   });
 
   // ---- History tab ----
@@ -864,9 +864,9 @@ function renderHistory() {
     if (!md) return;
     const tv = md.adsHT * 0.2;
     const tc = md.adsHT + tv;
-    const ac2 = md.adsSales > 0 ? (md.adsHT/md.adsSales*100).toFixed(1)+'%' : 'â';
+    const ac2 = md.adsSales > 0 ? (md.adsHT/md.adsSales*100).toFixed(1)+'%' : '—';
 
-    histBody.innerHTML += '<tr><td><b>'+mk2+'</b></td><td><span style="font-size:10px;color:var(--dim)">'+md.source+'</span></td><td>'+fmt(md.units)+'</td><td>'+fmt(md.royalties)+'â¬</td><td>'+fmt(md.adsHT)+'â¬</td><td>'+fmt(tv)+'â¬</td><td>'+fmt(tc)+'â¬</td><td>'+ac2+'</td><td class="'+(md.net>=0?'up':'down')+'"><b>'+fmt(md.net)+'â¬</b></td></tr>';
+    histBody.innerHTML += '<tr><td><b>'+mk2+'</b></td><td><span style="font-size:10px;color:var(--dim)">'+md.source+'</span></td><td>'+fmt(md.units)+'</td><td>'+fmt(md.royalties)+'€</td><td>'+fmt(md.adsHT)+'€</td><td>'+fmt(tv)+'€</td><td>'+fmt(tc)+'€</td><td>'+ac2+'</td><td class="'+(md.net>=0?'up':'down')+'"><b>'+fmt(md.net)+'€</b></td></tr>';
     chartLabels.push(mk2);
     chartNets.push(md.net);
   });
@@ -877,9 +877,9 @@ function renderHistory() {
       type: 'bar',
       data: { labels: chartLabels, datasets: [
         { label: 'Marge nette', data: chartNets, backgroundColor: chartNets.map(v=>v>=0?'rgba(16,185,129,.5)':'rgba(239,68,68,.5)'), borderRadius: 4 },
-        { label: 'Target 4kâ¬', data: chartLabels.map(mk2 => MONTHLY_TARGETS[mk2.slice(5,7)] || 3032), type:'line', borderColor:'#f59e0b', borderDash:[5,5], pointRadius:0 },
+        { label: 'Target 4k€', data: chartLabels.map(mk2 => MONTHLY_TARGETS[mk2.slice(5,7)] || 3032), type:'line', borderColor:'#f59e0b', borderDash:[5,5], pointRadius:0 },
       ]},
-      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback:v=>fmtK(v)+'â¬' } } } }
+      options: { responsive:true, maintainAspectRatio:false, scales: { y: { ticks: { callback:v=>fmtK(v)+'€' } } } }
     });
   }
 }
