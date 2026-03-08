@@ -465,12 +465,15 @@ MONTHLY_SCRAPED.forEach(m => {
   }
 });
 
-// ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports) =====
+// ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-08T16:00:00',
-  today: { date: '2026-03-08', units: 13, royalties: 71.11, kenp: 0 },
-  yesterday: { date: '2026-03-07', units: 31, royalties: 157.56, kenp: 162 },
-  monthToDate: { units: 243, royalties: 1269.32, kenp: 879 }
+  scrapedAt: '2026-03-08T16:30:00',
+  today: { date: '2026-03-08', units: 13, royalties: 71.11, kenp: 0, adsHT: 46.00, adsSales: 77.67, adsOrders: 6 },
+  yesterday: { date: '2026-03-07', units: 31, royalties: 157.56, kenp: 162, adsHT: 95.92, adsSales: 253.88, adsOrders: 19 },
+  monthToDate: { units: 243, royalties: 1269.32, kenp: 879, adsHT: 741.17, adsSales: 1801.28 }
+  // Ads daily: scrapé graphique Amazon Ads (USD→EUR via ratio mois 741.17/861.00=0.8608)
+  // Today 08/03: 53.44$US → 46.00€ | Sales 90.22$US → 77.67€ | 6 achats
+  // Yesterday 07/03: 111.43$US → 95.92€ | Sales 294.88$US → 253.88€ | 19 achats
 };
 
 // ===== DATA STORE =====
@@ -753,9 +756,10 @@ function refresh() {
   if (todayEntry) {
     document.getElementById('dayTodayUnits').textContent = fmt(todayEntry.units);
     document.getElementById('dayTodayCA').textContent = todayEntry.royalties.toFixed(2) + '€';
-    document.getElementById('dayTodayAds').textContent = '—';
-    document.getElementById('dayTodayNet').textContent = todayEntry.royalties.toFixed(2) + '€';
-    document.getElementById('dayTodayNet').style.color = 'var(--green)';
+    document.getElementById('dayTodayAds').textContent = todayEntry.adsHT ? todayEntry.adsHT.toFixed(2) + '€' : '—';
+    const tNet = todayEntry.royalties - (todayEntry.adsHT || 0) * 1.2;
+    document.getElementById('dayTodayNet').textContent = tNet.toFixed(2) + '€';
+    document.getElementById('dayTodayNet').style.color = tNet >= 0 ? 'var(--green)' : 'var(--red)';
     if (yesterdayEntry) {
       const diff = todayEntry.royalties - yesterdayEntry.royalties;
       const diffUnits = todayEntry.units - yesterdayEntry.units;
@@ -768,9 +772,10 @@ function refresh() {
   if (yesterdayEntry) {
     document.getElementById('dayYesterdayUnits').textContent = fmt(yesterdayEntry.units);
     document.getElementById('dayYesterdayCA').textContent = yesterdayEntry.royalties.toFixed(2) + '€';
-    document.getElementById('dayYesterdayAds').textContent = '—';
-    document.getElementById('dayYesterdayNet').textContent = yesterdayEntry.royalties.toFixed(2) + '€';
-    document.getElementById('dayYesterdayNet').style.color = 'var(--green)';
+    document.getElementById('dayYesterdayAds').textContent = yesterdayEntry.adsHT ? yesterdayEntry.adsHT.toFixed(2) + '€' : '—';
+    const yNet = yesterdayEntry.royalties - (yesterdayEntry.adsHT || 0) * 1.2;
+    document.getElementById('dayYesterdayNet').textContent = yNet.toFixed(2) + '€';
+    document.getElementById('dayYesterdayNet').style.color = yNet >= 0 ? 'var(--green)' : 'var(--red)';
   }
 
   // Goal progress (using YTD data)
