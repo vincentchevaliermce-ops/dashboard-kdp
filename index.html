@@ -448,7 +448,7 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'Auto-scrapé 08/03 + BSR 09/03',
+    source: 'KDP 08/03 · BSR confirmé 09/03 (5 livres)',
     units: 243,
     royalties: 1269.32,
     adsHT: 741.17,       // 48 campagnes scrapées 08/03
@@ -467,7 +467,7 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-09T09:00:00',
+  scrapedAt: '2026-03-09T10:30:00',
   today: { date: '2026-03-08', units: 13, royalties: 71.11, kenp: 0, adsHT: 46.00, adsSales: 77.67, adsOrders: 6 },
   yesterday: { date: '2026-03-07', units: 31, royalties: 157.56, kenp: 162, adsHT: 95.92, adsSales: 253.88, adsOrders: 19 },
   monthToDate: { units: 243, royalties: 1269.32, kenp: 879, adsHT: 741.17, adsSales: 1801.28 }
@@ -844,7 +844,7 @@ function refresh() {
   const bsrTableEl = document.getElementById('dashBSRTable');
   bsrTableEl.innerHTML = '';
   const latestBSR = {};
-  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-08' }; });
+  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-09' }; });
   bsrData.forEach(d => { latestBSR[d.bookId] = { bsr: d.bsr, date: d.date }; });
 
   const bsrSorted = Object.entries(latestBSR).sort((a,b) => a[1].bsr - b[1].bsr).slice(0, 8);
