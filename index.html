@@ -402,16 +402,16 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <script>
 // ===== BOOKS CONFIG =====
 const BOOKS = [
-  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:61,defaultReviews:159,defaultRating:4.2},
+  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:68,defaultReviews:161,defaultRating:4.2},
   {id:'roblox-t2',title:'Roblox T2',asin:'B0GMD3BN6N',identity:'Simon',defaultBSR:864,defaultReviews:29,defaultRating:4.6},
-  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:496,defaultReviews:149,defaultRating:4.6},
-  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:608,defaultReviews:264,defaultRating:4.5},
+  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:492,defaultReviews:149,defaultRating:4.6},
+  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:515,defaultReviews:264,defaultRating:4.5},
   {id:'gaspard-t2',title:'Gaspard T2',asin:'B0F9P8DGYV',identity:'M&V',defaultBSR:3614,defaultReviews:190,defaultRating:4.7},
   {id:'gaspard-t3',title:'Gaspard T3',asin:'B0F9DX17MV',identity:'M&V',defaultBSR:37925,defaultReviews:115,defaultRating:4.6},
   {id:'gaspard-t4',title:'Gaspard T4',asin:'B0F8VGYNL3',identity:'M&V',defaultBSR:91188,defaultReviews:72,defaultRating:4.6},
   {id:'gaspard-t5',title:'Gaspard T5',asin:'B0FT7ZVY8M',identity:'M&V',defaultBSR:8142,defaultReviews:28,defaultRating:4.5},
-  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:2962,defaultReviews:35,defaultRating:4.2},
-  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:2861,defaultReviews:42,defaultRating:4.2},
+  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:3303,defaultReviews:35,defaultRating:4.2},
+  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:2731,defaultReviews:42,defaultRating:4.2},
   {id:'petite-girafe',title:'Petite Girafe',asin:'B0D36H833M',identity:'M&V',defaultBSR:37267,defaultReviews:156,defaultRating:4.7},
   {id:'frisson',title:'Frisson Manchot',asin:'B0F91FT2ZT',identity:'M&V',defaultBSR:37516,defaultReviews:39,defaultRating:4.6},
   {id:'histoire-lit',title:'Histoire au Lit',asin:'B0F5PWMFSJ',identity:'M&V',defaultBSR:70138,defaultReviews:69,defaultRating:4.5},
@@ -448,13 +448,13 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'KDP 11/03 soir / Ads 11/03 soir (mars 1-9, campagnes suspendues facturation)',
-    units: 368,          // KDP Dashboard mois en cours scrapé 11/03 soir
-    royalties: 1920.97,  // KDP Dashboard "Redevances estimées" scrapé 11/03 soir
-    adsHT: 1014.81,      // Amazon Ads "Coût total" section Performances scrapé 11/03 soir
-    adsSales: 2643.18,   // Amazon Ads "Ventes" section Performances scrapé 11/03 soir
-    acos: 38.39,         // Amazon Ads "ACOS" scrapé 11/03 ⚠️ campagnes suspendues facturation 3 pays
-    net: null            // calculé: 1920.97 - (1014.81×1.2) = 703.20€
+    source: 'KDP 12/03 12h55 / Ads 11/03 soir (campagnes suspendues facturation — adsHT inchangé)',
+    units: 380,          // KDP Dashboard "Commandes" scrapé 12/03 12h55 (380 commandes traitées)
+    royalties: 1988.78,  // KDP Dashboard "Redevances estimées" scrapé 12/03 12h55
+    adsHT: 1014.81,      // Amazon Ads scrapé 11/03 soir — ⚠️ campagnes suspendues problème facturation, données non actualisées
+    adsSales: 2643.18,   // Amazon Ads scrapé 11/03 soir (inchangé)
+    acos: 38.39,         // Amazon Ads scrapé 11/03 ⚠️ campagnes suspendues facturation
+    net: null            // calculé: 1988.78 - (1014.81×1.2) = 771.01€
   }
 ];
 
@@ -467,12 +467,12 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-11T20:00:00',
-  today: { date: '2026-03-11', units: 20, royalties: 109.24, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
-  yesterday: { date: '2026-03-10', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
-  monthToDate: { units: 368, royalties: 1920.97, kenp: 975, adsHT: 1014.81, adsSales: 2643.18 }
-  // Données agrégées : KDP 1-11 mars scrapé 20h + Ads 1-9 mars scrapé 20h
-  // ⚠️ ALERTE : campagnes Ads suspendues facturation dans 3 pays
+  scrapedAt: '2026-03-12T09:00:00',
+  today: { date: '2026-03-12', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
+  yesterday: { date: '2026-03-11', units: 20, royalties: 109.24, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
+  monthToDate: { units: 377, royalties: 1970.63, kenp: 998, adsHT: 1014.81, adsSales: 2643.18 }
+  // Données agrégées : KDP 1-12 mars scrapé 12/03 matin + Ads 1-9 mars scrapé 11/03 soir
+  // ⚠️ ALERTE : campagnes Ads suspendues facturation dans 3 pays — page Ads inaccessible 12/03
 };
 
 // Données Ads journalières scrapées du graphique Amazon Ads (USD→EUR via ratio 0.8608)
@@ -843,7 +843,7 @@ function refresh() {
   const bsrTableEl = document.getElementById('dashBSRTable');
   bsrTableEl.innerHTML = '';
   const latestBSR = {};
-  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-11' }; });
+  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-12' }; });
   bsrData.forEach(d => { latestBSR[d.bookId] = { bsr: d.bsr, date: d.date }; });
 
   const bsrSorted = Object.entries(latestBSR).sort((a,b) => a[1].bsr - b[1].bsr).slice(0, 8);
