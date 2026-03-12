@@ -402,16 +402,16 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <script>
 // ===== BOOKS CONFIG =====
 const BOOKS = [
-  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:60,defaultReviews:161,defaultRating:4.2},
+  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:56,defaultReviews:161,defaultRating:4.2},
   {id:'roblox-t2',title:'Roblox T2',asin:'B0GMD3BN6N',identity:'Simon',defaultBSR:864,defaultReviews:29,defaultRating:4.6},
-  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:674,defaultReviews:150,defaultRating:4.6},
-  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:511,defaultReviews:264,defaultRating:4.5},
+  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:691,defaultReviews:150,defaultRating:4.6},
+  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:526,defaultReviews:264,defaultRating:4.5},
   {id:'gaspard-t2',title:'Gaspard T2',asin:'B0F9P8DGYV',identity:'M&V',defaultBSR:3614,defaultReviews:190,defaultRating:4.7},
   {id:'gaspard-t3',title:'Gaspard T3',asin:'B0F9DX17MV',identity:'M&V',defaultBSR:37925,defaultReviews:115,defaultRating:4.6},
   {id:'gaspard-t4',title:'Gaspard T4',asin:'B0F8VGYNL3',identity:'M&V',defaultBSR:91188,defaultReviews:72,defaultRating:4.6},
   {id:'gaspard-t5',title:'Gaspard T5',asin:'B0FT7ZVY8M',identity:'M&V',defaultBSR:8142,defaultReviews:28,defaultRating:4.5},
-  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:5602,defaultReviews:35,defaultRating:4.2},
-  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:1940,defaultReviews:42,defaultRating:4.2},
+  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:5704,defaultReviews:35,defaultRating:4.2},
+  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:2941,defaultReviews:42,defaultRating:4.2},
   {id:'petite-girafe',title:'Petite Girafe',asin:'B0D36H833M',identity:'M&V',defaultBSR:37267,defaultReviews:156,defaultRating:4.7},
   {id:'frisson',title:'Frisson Manchot',asin:'B0F91FT2ZT',identity:'M&V',defaultBSR:37516,defaultReviews:39,defaultRating:4.6},
   {id:'histoire-lit',title:'Histoire au Lit',asin:'B0F5PWMFSJ',identity:'M&V',defaultBSR:70138,defaultReviews:69,defaultRating:4.5},
@@ -448,13 +448,13 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'KDP+Ads scrapé 12/03 soir — 408u, 2135€ roy, 1090€ ads — ⚠️ ALERTE FACTURATION 3 pays',
-    units: 408,          // KDP Reports scrapé 12/03 : 408 unités (brochés, tous marchés)
-    royalties: 2135.54,  // KDP Dashboard Mois en cours scrapé 12/03 : redevances estimées 1-12 mars
-    adsHT: 1089.73,      // Amazon Ads Campagnes 12/03 — Coût total 1-12 mars (Performances panel)
-    adsSales: 2943.38,   // Amazon Ads Campagnes 12/03 — Ventes 1-12 mars (Performances panel)
-    acos: 37.02,         // Amazon Ads 12/03 — ACOS Performances panel
-    net: null            // calculé: 2135.54 - (1089.73×1.2) = 827.86€ ⚠️ campagnes suspendues facturation
+    source: 'KDP+Ads scrapé auto 12/03 — 410u, 2143€ roy, 1103€ ads — ⚠️ ALERTE FACTURATION 3 pays',
+    units: 410,          // KDP Reports scrapé 12/03 : 410 unités (brochés, tous marchés)
+    royalties: 2143.16,  // KDP Dashboard Mois en cours scrapé 12/03 : redevances estimées 1-12 mars
+    adsHT: 1103.06,      // Amazon Ads Campagnes 12/03 — Coût total 1-12 mars (Performances panel)
+    adsSales: 3059.84,   // Amazon Ads Campagnes 12/03 — Ventes 1-12 mars (Performances panel)
+    acos: 36.05,         // Amazon Ads 12/03 — ACOS Performances panel
+    net: null            // calculé: 2143.16 - (1103.06×1.2) = 819.49€ ⚠️ campagnes suspendues facturation
   }
 ];
 
@@ -467,11 +467,11 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-12T21:00:00',
+  scrapedAt: '2026-03-12T23:00:00',
   today: { date: '2026-03-12', units: 14, royalties: 76.94, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
   yesterday: { date: '2026-03-11', units: 20, royalties: 109.24, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
-  monthToDate: { units: 408, royalties: 2135.54, kenp: 1009, adsHT: 1089.73, adsSales: 2943.38 }
-  // Données agrégées : KDP 1-12 mars scrapé 12/03 soir (408 unités, 2135.54€, 1009 KENP) + Ads scrapé 12/03 soir (1089.73€ HT, 2943.38€ ventes, ACOS 37.02%)
+  monthToDate: { units: 410, royalties: 2143.16, kenp: 1009, adsHT: 1103.06, adsSales: 3059.84 }
+  // Données agrégées : KDP 1-12 mars scrapé auto 12/03 (410 unités, 2143.16€, 1009 KENP) + Ads scrapé 12/03 (1103.06€ HT, 3059.84€ ventes, ACOS 36.05%)
   // ⚠️ ALERTE : campagnes Ads suspendues facturation dans 3 pays
 };
 
