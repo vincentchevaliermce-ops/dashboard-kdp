@@ -448,13 +448,13 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'Scrapé auto 14/03 — 470u, 2456€ roy, 541€ ads HT FR only ⚠️ FACTURATION SUSPENDUE 3 pays (US/DE/ES) | Portefeuilles FR: 540.62€ HT, ACOS 36.85%, 113 achats | BSR: Roblox#59 Gaspard#442 Rose#658 KPOP#1919 50Err#6715',
-    units: 470,          // KDP Dashboard "Mois en cours" scrapé 14/03 : 470 commandes traitées
-    royalties: 2456.38,  // KDP Dashboard "Mois en cours" scrapé 14/03 : redevances estimées 1-14 mars
-    adsHT: 540.62,       // Amazon Ads Portefeuilles FR "Ce mois-ci" scrapé 14/03 : coût total (FR seul, US/DE/ES suspendus)
-    adsSales: 1467.14,   // Calculé: adsHT/ACOS = 540.62/0.3685
-    acos: 36.85,         // Amazon Ads Portefeuilles FR "Ce mois-ci" scrapé 14/03
-    net: null            // calculé: 2456.38 - (540.62×1.2) = 1807.64€ ⚠️ ads FR only, 3 pays suspendus facturation
+    source: 'Scrapé auto 14/03 soir — 488u, 2552€ roy, 541€ ads HT FR only ⚠️ FACTURATION SUSPENDUE | BSR: Roblox#51 Gaspard#520 Rose#678 KPOP#2440 50Err#10191 | Top: Gaspard 84.70€(14cmd), Rose 70.88€(16cmd), KPOP 35€(7cmd)',
+    units: 488,          // KDP Dashboard "Mois en cours" scrapé 14/03 soir : 488 commandes traitées
+    royalties: 2551.98,  // KDP Dashboard "Mois en cours" scrapé 14/03 soir : redevances estimées 1-14 mars
+    adsHT: 540.62,       // Inchangé — anciennes campagnes ~541€, nouvelles CDM suspendues billing = 0€ dépensé
+    adsSales: 1467.14,   // Inchangé — ads figées (campagnes suspendues)
+    acos: 36.85,         // Inchangé — basé sur anciennes campagnes FR
+    net: null            // calculé: 2551.98 - (540.62×1.2) = 1903.24€ ⚠️ ads figées, campagnes suspendues
   }
 ];
 
@@ -467,12 +467,14 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-13T22:00:00',
-  today: { date: '2026-03-13', units: 20, royalties: 106.84, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
-  yesterday: { date: '2026-03-12', units: 14, royalties: 76.94, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
-  monthToDate: { units: 430, royalties: 2250.00, kenp: 1009, adsHT: 1103.06, adsSales: 3059.84 }
-  // Données agrégées : KDP 1-13 mars scrapé auto 13/03 (430 unités, 2250€, 1009 KENP) + Ads dernières données 12/03 (1103.06€ HT)
-  // ⚠️ ALERTE : campagnes Ads suspendues facturation dans 3 pays — données Ads figées au 12/03
+  scrapedAt: '2026-03-14T21:00:00',
+  today: { date: '2026-03-14', units: 50, royalties: 261.06, kenp: 28, adsHT: null, adsSales: null, adsOrders: null },
+  yesterday: { date: '2026-03-13', units: 20, royalties: 106.84, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
+  monthToDate: { units: 488, royalties: 2551.98, kenp: 1084, adsHT: 540.62, adsSales: 1467.14 }
+  // Données agrégées : KDP 1-14 mars scrapé auto 14/03 soir (488 unités, 2551.98€, 1084 KENP)
+  // Ads: anciennes campagnes ~541€ HT figées, nouvelles CDM suspendues billing = 0€
+  // Top livres mars: Gaspard 84.70€ (14 cmd), Rose 70.88€ (16 cmd), KPOP 35€ (7 cmd)
+  // ⚠️ ALERTE : campagnes Ads suspendues — problème facturation dans 3 pays
 };
 
 // Données Ads journalières scrapées du graphique Amazon Ads (USD→EUR via ratio 0.8608)
