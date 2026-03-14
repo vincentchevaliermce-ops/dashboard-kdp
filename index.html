@@ -402,16 +402,16 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <script>
 // ===== BOOKS CONFIG =====
 const BOOKS = [
-  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:53,defaultReviews:163,defaultRating:4.2},
+  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:60,defaultReviews:163,defaultRating:4.2},
   {id:'roblox-t2',title:'Roblox T2',asin:'B0GMD3BN6N',identity:'Simon',defaultBSR:864,defaultReviews:29,defaultRating:4.6},
-  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:551,defaultReviews:149,defaultRating:4.6},
-  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:593,defaultReviews:264,defaultRating:4.5},
+  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:567,defaultReviews:149,defaultRating:4.6},
+  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:612,defaultReviews:264,defaultRating:4.5},
   {id:'gaspard-t2',title:'Gaspard T2',asin:'B0F9P8DGYV',identity:'M&V',defaultBSR:3614,defaultReviews:190,defaultRating:4.7},
   {id:'gaspard-t3',title:'Gaspard T3',asin:'B0F9DX17MV',identity:'M&V',defaultBSR:37925,defaultReviews:115,defaultRating:4.6},
   {id:'gaspard-t4',title:'Gaspard T4',asin:'B0F8VGYNL3',identity:'M&V',defaultBSR:91188,defaultReviews:72,defaultRating:4.6},
   {id:'gaspard-t5',title:'Gaspard T5',asin:'B0FT7ZVY8M',identity:'M&V',defaultBSR:8142,defaultReviews:28,defaultRating:4.5},
-  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:10191,defaultReviews:35,defaultRating:4.2},
-  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:2440,defaultReviews:42,defaultRating:4.2},
+  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:11582,defaultReviews:35,defaultRating:4.2},
+  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:2375,defaultReviews:42,defaultRating:4.2},
   {id:'petite-girafe',title:'Petite Girafe',asin:'B0D36H833M',identity:'M&V',defaultBSR:37267,defaultReviews:156,defaultRating:4.7},
   {id:'frisson',title:'Frisson Manchot',asin:'B0F91FT2ZT',identity:'M&V',defaultBSR:37516,defaultReviews:39,defaultRating:4.6},
   {id:'histoire-lit',title:'Histoire au Lit',asin:'B0F5PWMFSJ',identity:'M&V',defaultBSR:70138,defaultReviews:69,defaultRating:4.5},
@@ -448,13 +448,13 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'Scrapé auto 14/03 — 501u, 2622€ roy, 1274€ ads HT multi-pays ⚠️ FACTURATION SUSPENDUE (3 pays) | BSR: Roblox#53 Gaspard#593 Rose#551 KPOP#2440 50Err#10191 | Top: Gaspard T1 932€(154u), Rose 665€(150u), KPOP 286€, Bison 212€, 50Err 208€',
-    units: 501,          // KDP Reports "Commandes" 1-14 mars 2026 (30 livres, tous marchés)
-    royalties: 2621.67,  // KDP Outil estimation redevances 1-14 mars (papier 2618.28€ + KENP 3.39€)
-    adsHT: 1273.82,      // Amazon Ads "Performances" 1-14 mars multi-pays (coût total)
-    adsSales: 3479.38,   // Amazon Ads "Performances" 1-14 mars multi-pays (ventes attribuées)
-    acos: 36.61,         // Amazon Ads ACOS 1-14 mars
-    net: null            // calculé: 2621.67 - (1273.82×1.2) = 1093.09€
+    source: 'Scrapé auto 14/03 — 508u, 2654€ roy, 1291€ ads HT multi-pays ⚠️ FACTURATION SUSPENDUE | BSR: Roblox#60 Gaspard#612 Rose#567 KPOP#2375 50Err#11582 | Top: Gaspard T1 938€(155u), Rose 691€(156u), KPOP 286€, Bison 212€, 50Err 208€',
+    units: 508,          // KDP Reports "Commandes" 1-14 mars 2026 (30 livres, tous marchés)
+    royalties: 2654.31,  // KDP Outil estimation redevances 1-14 mars (papier 2650.91€ + KENP 3.40€)
+    adsHT: 1291.09,      // Amazon Ads "Performances" 1-13 mars multi-pays (coût total)
+    adsSales: 3522.01,   // Amazon Ads "Performances" 1-13 mars multi-pays (ventes attribuées)
+    acos: 36.13,         // Amazon Ads ACOS 1-13 mars
+    net: null            // calculé: 2654.31 - (1291.09×1.2) = 1105.00€
   }
 ];
 
@@ -467,13 +467,13 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-14T22:00:00',
-  today: { date: '2026-03-14', units: 50, royalties: 261.06, kenp: 28, adsHT: null, adsSales: null, adsOrders: null },
-  yesterday: { date: '2026-03-13', units: 50, royalties: 261.06, kenp: 28, adsHT: null, adsSales: null, adsOrders: null },
-  monthToDate: { units: 501, royalties: 2621.67, kenp: 1084, adsHT: 1273.82, adsSales: 3479.38 }
-  // Données agrégées : KDP 1-14 mars scrapé auto 14/03 (501 unités, 2621.67€) + Ads multi-pays 1273.82€ HT
-  // Ads: anciennes campagnes ~541€ HT figées, nouvelles CDM suspendues billing = 0€
-  // Top livres mars: Gaspard 84.70€ (14 cmd), Rose 70.88€ (16 cmd), KPOP 35€ (7 cmd)
+  scrapedAt: '2026-03-14T23:00:00',
+  today: { date: '2026-03-14', units: 36, royalties: 189.59, kenp: 4, adsHT: null, adsSales: null, adsOrders: null },
+  yesterday: { date: '2026-03-13', units: 40, royalties: 209.82, kenp: 3, adsHT: 91.22, adsSales: 244.52, adsOrders: null },
+  monthToDate: { units: 508, royalties: 2654.31, kenp: 1087, adsHT: 1291.09, adsSales: 3522.01 }
+  // Données agrégées : KDP 1-14 mars scrapé auto 14/03 (508 unités, 2654.31€) + Ads multi-pays 1291.09€ HT (1-13 mars)
+  // Ads: ACOS 36.13% — données Ads disponibles jusqu'au 13/03 (délai 1 jour)
+  // Top livres mars: Gaspard T1 938€(155u), Rose 691€(156u), KPOP 286€(57u), Bison 212€(35u), 50Err 208€(43u)
   // ⚠️ ALERTE : campagnes Ads suspendues — problème facturation dans 3 pays
 };
 
@@ -845,7 +845,7 @@ function refresh() {
   const bsrTableEl = document.getElementById('dashBSRTable');
   bsrTableEl.innerHTML = '';
   const latestBSR = {};
-  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-13' }; });
+  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-14' }; });
   bsrData.forEach(d => { latestBSR[d.bookId] = { bsr: d.bsr, date: d.date }; });
 
   const bsrSorted = Object.entries(latestBSR).sort((a,b) => a[1].bsr - b[1].bsr).slice(0, 8);
