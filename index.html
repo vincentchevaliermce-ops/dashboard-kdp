@@ -448,13 +448,13 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'Scrapé auto 17/03 — 591u, 3082€ roy, 1589€ ads HT, ACOS 36.16% | BSR: Roblox#36 Rose#439 Gaspard#498 50Err#4656 KPOP#10832 | Top: Gaspard 178u(1077€), Rose 185u(820€), KPOP 300KENP(316€) | Avis: Roblox 4.2(163) Gaspard 4.5(264) Rose 4.6(149) KPOP 4.2(42) 50Err 4.2(35) | ⚠️ Ads suspendues facturation 3 pays',
-    units: 591,          // KDP Reports "Commandes" 1-17 mars 2026 (30 livres, tous marchés)
-    royalties: 3081.93,  // KDP Dashboard "Mois en cours" — confirmé scrape 17/03
-    adsHT: 1588.83,      // Amazon Ads "Performances" coût total 1-17 mars — confirmé scrape 17/03
-    adsSales: 4394.28,   // Amazon Ads "Performances" ventes 1-17 mars — confirmé scrape 17/03
-    acos: 36.16,         // Amazon Ads "Performances" ACOS — confirmé scrape 17/03
-    net: null            // calculé: 3081.93 - (1588.83×1.2) = 1175.33€
+    source: 'Scrapé auto 17/03 18h — 595u, 3100€ roy, 1612€ ads HT, ACOS 36.16% | BSR: Roblox#35 Rose#487 Gaspard#633 50Err#4018 KPOP#13009 | Top: Gaspard 178u(1077€), Rose 187u(828€), KPOP 321€(300 KENP) | Avis: Roblox 4.2(163) Gaspard 4.5(264) Rose 4.6(149) KPOP 4.2(42) 50Err 4.2(35) | ⚠️ Ads suspendues facturation 3 pays',
+    units: 595,          // KDP Reports "Commandes" 1-17 mars 2026 (30 livres, tous marchés)
+    royalties: 3100.15,  // KDP Royalties Estimator — confirmé scrape 17/03 18h
+    adsHT: 1612.15,      // Amazon Ads "Performances" coût total 1-17 mars — confirmé scrape 17/03 18h
+    adsSales: 4458.68,   // Amazon Ads "Performances" ventes 1-17 mars — confirmé scrape 17/03 18h
+    acos: 36.16,         // Amazon Ads "Performances" ACOS — confirmé scrape 17/03 18h
+    net: null            // calculé: 3100.15 - (1612.15×1.2) = 1165.57€
   }
 ];
 
@@ -467,13 +467,14 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-17T21:00:00',
-  today: { date: '2026-03-17', units: 40, royalties: 213.48, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
+  scrapedAt: '2026-03-17T18:00:00',
+  today: { date: '2026-03-17', units: 12, royalties: 55.20, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
   yesterday: { date: '2026-03-16', units: 6, royalties: 29.13, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
-  monthToDate: { units: 591, royalties: 3081.93, kenp: 1091, adsHT: 1588.83, adsSales: 4394.28 }
-  // Données agrégées : KDP 1-17 mars scrapé auto 17/03 — 591 unités, 3081.93€ royalties
-  // Ads: coût total 1588.83€ HT, ventes 4394.28€, ACOS 36.16%, 332 achats, 3187 clics, 1.19M impressions
-  // Top livres mars MTD: Gaspard T1 1077€(178u), Rose 820€(185u), KPOP 316€(300 KENP)
+  monthToDate: { units: 595, royalties: 3100.15, kenp: 1091, adsHT: 1612.15, adsSales: 4458.68 }
+  // Données agrégées : KDP 1-17 mars scrapé auto 17/03 18h — 595 unités, 3100.15€ royalties
+  // Ads: coût total 1612.15€ HT, ventes 4458.68€, ACOS 36.16%, 337 achats, 3230 clics, 1.21M impressions
+  // Top livres mars MTD: Gaspard T1 1077€(178u), Rose 828€(187u), KPOP 321€(300 KENP), Bison 242€, 50Err 237€
+  // BSR 17/03: Roblox#35(4.2★163avis) Rose#487(4.6★149) Gaspard#633(4.5★264) 50Err#4018(4.2★35) KPOP#13009(4.2★42)
   // ⚠️ ALERTE : campagnes Ads suspendues — problème facturation publicitaire dans 3 pays
 };
 
