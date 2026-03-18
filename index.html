@@ -448,13 +448,13 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'Scrapé auto 19/03 — 649u, 3378€ roy, 1762€ ads HT, ACOS 36.76% | BSR: Roblox#35 Rose#392 Gaspard#830 50Err#7004 KPOP#5711 | Avis: Roblox 4.2(166) Gaspard 4.5(264) Rose 4.6(152) KPOP 4.2(42) 50Err 4.3(37) | ⚠️ Ads suspendues facturation 3 pays',
-    units: 649,          // KDP Reports "Commandes" 1-19 mars 2026 (30 livres, tous marchés)
-    royalties: 3377.87,  // KDP Dashboard "Mois en cours" — confirmé scrape 19/03
-    adsHT: 1762.38,      // Amazon Ads "Performances" coût total 1-19 mars tous pays — confirmé scrape 19/03
-    adsSales: 4793.91,   // Amazon Ads "Performances" ventes 1-19 mars tous pays — confirmé scrape 19/03
-    acos: 36.76,         // Amazon Ads "Performances" ACOS — confirmé scrape 19/03
-    net: null            // calculé: 3377.87 - (1762.38×1.2) = 1263.01€
+    source: 'Scrapé auto 19/03 soir — 659u, 3435€ roy, 1813€ ads HT, ACOS 36.94% | BSR: Roblox#38 Rose#433 Gaspard#866 50Err#5265 KPOP#6758 | Avis: Roblox 4.2(166) Gaspard 4.5(264) Rose 4.6(152) KPOP 4.2(42) 50Err 4.3(38) | ⚠️ Ads suspendues facturation 3 pays',
+    units: 659,          // KDP Reports "Commandes" 1-19 mars 2026 (30 livres, tous marchés)
+    royalties: 3435.19,  // KDP Dashboard "Mois en cours" — confirmé scrape 19/03 soir
+    adsHT: 1813.02,      // Amazon Ads "Performances" coût total 1-19 mars tous pays — confirmé scrape 19/03 soir
+    adsSales: 4908.50,   // Amazon Ads "Performances" ventes 1-19 mars tous pays — confirmé scrape 19/03 soir
+    acos: 36.94,         // Amazon Ads "Performances" ACOS — confirmé scrape 19/03 soir
+    net: null            // calculé: 3435.19 - (1813.02×1.2) = 1259.57€
   }
 ];
 
@@ -467,12 +467,12 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-18T09:00:00',
-  today: { date: '2026-03-18', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
-  yesterday: { date: '2026-03-17', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
-  monthToDate: { units: 639, royalties: 3329.43, kenp: 1117, adsHT: 1701.69, adsSales: 4674.57 }
-  // Données agrégées : KDP 1-18 mars scrapé auto 18/03 — 639 unités, 3329.43€ royalties, 1117 KENP
-  // Ads: coût total 1701.69€ HT, ventes 4674.57€, ACOS 36.40%, 354 achats, 3403 clics, 1.28M impressions
+  scrapedAt: '2026-03-19T21:00:00',
+  today: { date: '2026-03-19', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
+  yesterday: { date: '2026-03-18', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
+  monthToDate: { units: 659, royalties: 3435.19, kenp: 1150, adsHT: 1813.02, adsSales: 4908.50 }
+  // Données agrégées : KDP 1-19 mars scrapé auto 19/03 soir — 659 unités, 3435.19€ royalties, 1150 KENP
+  // Ads: coût total 1813.02€ HT, ventes 4908.50€, ACOS 36.94%, 372 achats, 3403 clics, 1.27M impressions
   // ⚠️ ALERTE : campagnes Ads suspendues — problème facturation publicitaire dans 3 pays
 };
 
