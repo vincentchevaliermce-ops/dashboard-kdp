@@ -402,16 +402,16 @@ tr:hover td{background:rgba(99,102,241,.03)}
 <script>
 // ===== BOOKS CONFIG =====
 const BOOKS = [
-  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:60,defaultReviews:163,defaultRating:4.2},
+  {id:'roblox-t1',title:'Roblox T1',asin:'B0FXBFQ5ZS',identity:'Simon',defaultBSR:42,defaultReviews:166,defaultRating:4.2},
   {id:'roblox-t2',title:'Roblox T2',asin:'B0GMD3BN6N',identity:'Simon',defaultBSR:864,defaultReviews:29,defaultRating:4.6},
-  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:567,defaultReviews:149,defaultRating:4.6},
-  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:612,defaultReviews:264,defaultRating:4.5},
+  {id:'rose-licorne',title:'Rose Licorne',asin:'B0DJD7LT4G',identity:'M&V',defaultBSR:404,defaultReviews:152,defaultRating:4.6},
+  {id:'gaspard-t1',title:'Gaspard T1',asin:'B0F9SXN6LG',identity:'M&V',defaultBSR:730,defaultReviews:264,defaultRating:4.5},
   {id:'gaspard-t2',title:'Gaspard T2',asin:'B0F9P8DGYV',identity:'M&V',defaultBSR:3614,defaultReviews:190,defaultRating:4.7},
   {id:'gaspard-t3',title:'Gaspard T3',asin:'B0F9DX17MV',identity:'M&V',defaultBSR:37925,defaultReviews:115,defaultRating:4.6},
   {id:'gaspard-t4',title:'Gaspard T4',asin:'B0F8VGYNL3',identity:'M&V',defaultBSR:91188,defaultReviews:72,defaultRating:4.6},
   {id:'gaspard-t5',title:'Gaspard T5',asin:'B0FT7ZVY8M',identity:'M&V',defaultBSR:8142,defaultReviews:28,defaultRating:4.5},
-  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:11582,defaultReviews:35,defaultRating:4.2},
-  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:2375,defaultReviews:42,defaultRating:4.2},
+  {id:'50-erreurs',title:'50 Erreurs',asin:'B0FTS6HJJ9',identity:'M&V',defaultBSR:7004,defaultReviews:37,defaultRating:4.3},
+  {id:'kpop-t1',title:'K-POP T1',asin:'B0GGP1XGZM',identity:'Finger Heart',defaultBSR:5214,defaultReviews:42,defaultRating:4.2},
   {id:'petite-girafe',title:'Petite Girafe',asin:'B0D36H833M',identity:'M&V',defaultBSR:37267,defaultReviews:156,defaultRating:4.7},
   {id:'frisson',title:'Frisson Manchot',asin:'B0F91FT2ZT',identity:'M&V',defaultBSR:37516,defaultReviews:39,defaultRating:4.6},
   {id:'histoire-lit',title:'Histoire au Lit',asin:'B0F5PWMFSJ',identity:'M&V',defaultBSR:70138,defaultReviews:69,defaultRating:4.5},
@@ -448,13 +448,13 @@ const MONTHLY_SCRAPED = [
   {
     month: '2026-03',
     label: 'Mars 2026',
-    source: 'Scrapé auto 17/03 18h — 595u, 3100€ roy, 1612€ ads HT, ACOS 36.16% | BSR: Roblox#35 Rose#487 Gaspard#633 50Err#4018 KPOP#13009 | Top: Gaspard 178u(1077€), Rose 187u(828€), KPOP 321€(300 KENP) | Avis: Roblox 4.2(163) Gaspard 4.5(264) Rose 4.6(149) KPOP 4.2(42) 50Err 4.2(35) | ⚠️ Ads suspendues facturation 3 pays',
-    units: 595,          // KDP Reports "Commandes" 1-17 mars 2026 (30 livres, tous marchés)
-    royalties: 3100.15,  // KDP Royalties Estimator — confirmé scrape 17/03 18h
-    adsHT: 1612.15,      // Amazon Ads "Performances" coût total 1-17 mars — confirmé scrape 17/03 18h
-    adsSales: 4458.68,   // Amazon Ads "Performances" ventes 1-17 mars — confirmé scrape 17/03 18h
-    acos: 36.16,         // Amazon Ads "Performances" ACOS — confirmé scrape 17/03 18h
-    net: null            // calculé: 3100.15 - (1612.15×1.2) = 1165.57€
+    source: 'Scrapé auto 18/03 soir — 641u, 3341€ roy, 1736€ ads HT, ACOS 36.62% | BSR: Roblox#42 Rose#404 Gaspard#730 50Err#7004 KPOP#5214 | Avis: Roblox 4.2(166) Gaspard 4.5(264) Rose 4.6(152) KPOP 4.2(42) 50Err 4.3(37) | ⚠️ Ads suspendues facturation 3 pays',
+    units: 641,          // KDP Reports "Commandes" 1-18 mars 2026 (30 livres, tous marchés)
+    royalties: 3340.51,  // KDP Dashboard "Mois en cours" — confirmé scrape 18/03 soir
+    adsHT: 1736.32,      // Amazon Ads "Performances" coût total 1-18 mars tous pays — confirmé scrape 18/03 soir
+    adsSales: 4740.87,   // Amazon Ads "Performances" ventes 1-18 mars tous pays — confirmé scrape 18/03 soir
+    acos: 36.62,         // Amazon Ads "Performances" ACOS — confirmé scrape 18/03 soir
+    net: null            // calculé: 3340.51 - (1736.32×1.2) = 1256.93€
   }
 ];
 
@@ -467,14 +467,12 @@ MONTHLY_SCRAPED.forEach(m => {
 
 // ===== DAILY SCRAPED DATA (auto-scraped from KDP Reports + Amazon Ads chart) =====
 const DAILY_SCRAPED = {
-  scrapedAt: '2026-03-17T18:00:00',
-  today: { date: '2026-03-17', units: 12, royalties: 55.20, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
-  yesterday: { date: '2026-03-16', units: 6, royalties: 29.13, kenp: 0, adsHT: null, adsSales: null, adsOrders: null },
-  monthToDate: { units: 595, royalties: 3100.15, kenp: 1091, adsHT: 1612.15, adsSales: 4458.68 }
-  // Données agrégées : KDP 1-17 mars scrapé auto 17/03 18h — 595 unités, 3100.15€ royalties
-  // Ads: coût total 1612.15€ HT, ventes 4458.68€, ACOS 36.16%, 337 achats, 3230 clics, 1.21M impressions
-  // Top livres mars MTD: Gaspard T1 1077€(178u), Rose 828€(187u), KPOP 321€(300 KENP), Bison 242€, 50Err 237€
-  // BSR 17/03: Roblox#35(4.2★163avis) Rose#487(4.6★149) Gaspard#633(4.5★264) 50Err#4018(4.2★35) KPOP#13009(4.2★42)
+  scrapedAt: '2026-03-18T09:00:00',
+  today: { date: '2026-03-18', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
+  yesterday: { date: '2026-03-17', units: null, royalties: null, kenp: null, adsHT: null, adsSales: null, adsOrders: null },
+  monthToDate: { units: 639, royalties: 3329.43, kenp: 1117, adsHT: 1701.69, adsSales: 4674.57 }
+  // Données agrégées : KDP 1-18 mars scrapé auto 18/03 — 639 unités, 3329.43€ royalties, 1117 KENP
+  // Ads: coût total 1701.69€ HT, ventes 4674.57€, ACOS 36.40%, 354 achats, 3403 clics, 1.28M impressions
   // ⚠️ ALERTE : campagnes Ads suspendues — problème facturation publicitaire dans 3 pays
 };
 
@@ -846,7 +844,7 @@ function refresh() {
   const bsrTableEl = document.getElementById('dashBSRTable');
   bsrTableEl.innerHTML = '';
   const latestBSR = {};
-  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-14' }; });
+  BOOKS.forEach(b => { latestBSR[b.id] = { bsr: b.defaultBSR, date: '2026-03-18' }; });
   bsrData.forEach(d => { latestBSR[d.bookId] = { bsr: d.bsr, date: d.date }; });
 
   const bsrSorted = Object.entries(latestBSR).sort((a,b) => a[1].bsr - b[1].bsr).slice(0, 8);
